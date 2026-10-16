@@ -1,0 +1,958 @@
+<!DOCTYPE html><html class="h-full bg-[#f8f9fe]" lang="es" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Moravia — Portal Arquitectónico de Gestión</title>
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            primary: {
+              DEFAULT: '#3525cd',
+              container: '#4f46e5',
+              tint: '#4d44e3',
+              hover: '#291cb0',
+              50: '#eef2ff',
+              100: '#e0e7ff',
+            },
+            surface: {
+              DEFAULT: '#faf8ff',
+              container: '#f1f3fd',
+              high: '#e6eaf8',
+              card: '#ffffff'
+            }
+          },
+          boxShadow: {
+            'subtle': '0 1px 3px rgba(19, 27, 46, 0.04), 0 4px 16px rgba(53, 37, 205, 0.03)',
+            'card': '0 4px 20px -2px rgba(19, 27, 46, 0.05), 0 2px 6px -1px rgba(19, 27, 46, 0.02)',
+            'elevated': '0 12px 32px -4px rgba(53, 37, 205, 0.08), 0 4px 12px -2px rgba(19, 27, 46, 0.04)',
+            'glow': '0 0 20px -3px rgba(79, 70, 229, 0.35)',
+          }
+        }
+      }
+    }
+  </script>
+<style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      letter-spacing: -0.011em;
+    }
+    ::-webkit-scrollbar { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-thumb { background: #dce1f2; border-radius: 9999px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    .glass-panel {
+      background: rgba(255, 255, 255, 0.88);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+    }
+    .mesh-gradient {
+      background: radial-gradient(at 0% 0%, rgba(224, 231, 255, 0.45) 0px, transparent 50%),
+                  radial-gradient(at 100% 0%, rgba(238, 242, 255, 0.7) 0px, transparent 50%),
+                  radial-gradient(at 50% 100%, rgba(243, 244, 255, 0.5) 0px, transparent 50%);
+    }
+  </style>
+</head>
+<body class="h-full bg-[#f8f9fe] text-slate-800 antialiased flex overflow-hidden selection:bg-indigo-100 selection:text-indigo-900">
+<!-- ======================= SIDEBAR IZQUIERDA MODERNIZADA ======================= -->
+<aside class="w-72 bg-white border-r border-slate-200/80 flex flex-col justify-between shrink-0 h-screen select-none z-30 transition-all duration-300">
+<div class="flex flex-col h-full overflow-hidden">
+<!-- Brand & Consorcio Switcher -->
+<div class="p-5 pb-4 border-b border-slate-100">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-700 via-indigo-600 to-indigo-500 flex items-center justify-center text-white shadow-md shadow-indigo-500/25">
+<span class="material-symbols-outlined text-[20px] font-medium">apartment</span>
+</div>
+<div><span class="font-bold text-lg tracking-tight text-slate-900 block leading-tight">Moravia</span>
+<span class="text-[10px] tracking-wider uppercase font-semibold text-indigo-600">Architectural Suite</span></div>
+</div>
+<span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-50 text-indigo-600 border border-indigo-100">v2.4</span>
+</div>
+<!-- Consorcio / Edificio Switcher Selector con carácter -->
+<div class="relative">
+<button class="w-full flex items-center justify-between p-2.5 bg-slate-50/90 hover:bg-slate-100/90 border border-slate-200/80 rounded-xl text-left transition-all group">
+<div class="flex items-center gap-2.5 min-w-0">
+<span class="relative flex h-2.5 w-2.5 shrink-0">
+<span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+<span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500"></span>
+</span>
+<div class="truncate">
+<div class="text-xs font-bold text-slate-900 group-hover:text-indigo-600 transition-colors truncate">Torre Alvear Premium</div>
+<div class="text-[10px] text-slate-400 flex items-center gap-1">
+<span class="">Av. Alvear 1850</span>
+<span class="">•</span>
+<span class="">48 Unid.</span>
+</div>
+</div>
+</div>
+<span class="material-symbols-outlined text-[18px] text-slate-400 group-hover:text-slate-700 transition-transform">unfold_more</span>
+</button>
+</div>
+</div>
+<!-- Menús de Navegación -->
+<div class="flex-1 overflow-y-auto px-3.5 py-4 space-y-6">
+<!-- Grupo Principal -->
+<div>
+<span class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Principal</span>
+<nav class="space-y-1">
+<a class="relative flex items-center gap-3 px-3.5 py-2.5 rounded-xl bg-indigo-600 text-white font-medium text-xs shadow-sm shadow-indigo-400/30 group" href="#">
+<span class="material-symbols-outlined text-[19px]">domain</span>
+<span class="font-semibold tracking-wide">Departamentos</span>
+<span class="ml-auto bg-white/20 text-white font-bold text-[10px] px-2 py-0.5 rounded-full">48</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium text-xs transition-colors group" href="#">
+<span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-600">group</span>
+<span class="">Residentes</span>
+<span class="ml-auto text-[11px] text-slate-400">114</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium text-xs transition-colors group" href="#">
+<span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-600">account_balance_wallet</span>
+<span class="">Cuotas y Pagos</span>
+<span class="ml-auto w-2 h-2 rounded-full bg-rose-500"></span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium text-xs transition-colors group" href="#">
+<span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-600">engineering</span>
+<span class="">Mantenimiento</span>
+<span class="ml-auto text-[10px] bg-amber-50 text-amber-700 font-semibold px-1.5 py-0.5 rounded-md border border-amber-200">2 act.</span>
+</a>
+</nav>
+</div>
+<!-- Grupo Gestión Consorcio -->
+<div>
+<span class="px-3 text-[10px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Gestión y Operaciones</span>
+<nav class="space-y-1">
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium text-xs transition-colors group" href="#">
+<span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-600">campaign</span>
+<span class="">Comunicados &amp; Avisos</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium text-xs transition-colors group" href="#">
+<span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-600">pool</span>
+<span class="">Amenidades &amp; Reservas</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium text-xs transition-colors group" href="#">
+<span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-600">bar_chart</span>
+<span class="">Reportes Financieros</span>
+</a>
+<a class="flex items-center gap-3 px-3.5 py-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-medium text-xs transition-colors group" href="#">
+<span class="material-symbols-outlined text-[19px] text-slate-400 group-hover:text-slate-600">folder_open</span>
+<span class="">Documentos Legales</span>
+</a>
+</nav>
+</div>
+<!-- Mini Tarjeta de Estado del Consorcio -->
+<div class="mx-1 p-3.5 rounded-xl bg-gradient-to-br from-indigo-50/90 to-purple-50/50 border border-indigo-100/80">
+<div class="flex items-center justify-between text-xs font-semibold text-slate-800 mb-1">
+<span class="flex items-center gap-1.5 text-indigo-900 font-bold">
+<span class="material-symbols-outlined text-[15px] text-indigo-600">cloud_done</span>
+              Cierre Mensual
+            </span>
+<span class="text-[11px] font-bold text-indigo-700">85%</span>
+</div>
+<div class="w-full bg-indigo-100/80 rounded-full h-1.5 my-2 overflow-hidden">
+<div class="bg-indigo-600 h-1.5 rounded-full" style="width: 85%"></div>
+</div>
+<p class="text-[11px] text-slate-500 leading-tight">41 de 48 expensas conciliadas este período.</p>
+</div>
+</div>
+<!-- Pie de Sidebar: Perfil del Administrador -->
+<div class="p-3.5 border-t border-slate-100 bg-white">
+<div class="flex items-center justify-between p-2 rounded-xl hover:bg-slate-50 transition-colors">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="relative">
+<img alt="Valeria Mendoza" class="w-9 h-9 rounded-full object-cover ring-2 ring-indigo-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBcx4WAq1pmhfC4Nl_s9cOaLEfCRuucdnxxHcLtRgBRid2vZeOUKps8Fzfai17QsRLJ_TDuEvOByQMhY9NBdvKO3TgnsgSmBT6EwA1gMTBPBPahoK4ZRZB7ur7GFahXMu2Rs10E5Mf3GKiaNBbkbyGZCrIBGdrO2F8WmvbKLNBavGeHCv_OZ_kG1CeqxO_gorny6CkrQYPRiR4-2-d7NIVP1jFgEz-2fQGaf-99vLQ5Mvq3RO54sWBphw">
+<span class="absolute bottom-0 right-0 w-2.5 h-2.5 bg-emerald-500 rounded-full border-2 border-white"></span>
+</div>
+<div class="truncate">
+<div class="text-xs font-bold text-slate-900 truncate">Valeria Mendoza</div>
+<div class="text-[10px] text-indigo-600 font-medium">Administradora General</div>
+</div>
+</div>
+<button class="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors" title="Ajustes de cuenta">
+<span class="material-symbols-outlined text-[18px]">settings</span>
+</button>
+</div>
+</div>
+</div>
+</aside>
+<!-- ======================= ÁREA PRINCIPAL CON HEADER SUPERIOR ======================= -->
+<div class="flex-1 flex flex-col h-screen overflow-hidden">
+<!-- Topbar Superior Elegante -->
+<header class="h-16 bg-white/90 backdrop-blur-md border-b border-slate-200/80 px-6 flex items-center justify-between shrink-0 z-20">
+<!-- Breadcrumb y Contexto -->
+<div class="flex items-center gap-3">
+<div class="flex items-center gap-1.5 text-xs text-slate-400 font-medium">
+<span class="">Torre Alvear</span>
+<span class="material-symbols-outlined text-[14px]">chevron_right</span>
+<span class="text-slate-800 font-bold">Unidades Funcionales</span>
+</div>
+<span class="hidden md:inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200/80">
+          Ejercicio 2024 / Noviembre
+        </span>
+</div>
+<!-- Barra de Acciones Globales: Buscador Ctrl+K + Notificaciones + Botón Primario -->
+<div class="flex items-center gap-3">
+<!-- Quick Search Bar (Cmd+K style) -->
+<div class="relative hidden sm:flex items-center">
+<span class="material-symbols-outlined absolute left-3 text-[17px] text-slate-400">search</span>
+<input class="w-64 lg:w-80 pl-9 pr-14 py-1.5 text-xs rounded-xl bg-slate-100/80 hover:bg-slate-100 border border-transparent focus:border-indigo-400 focus:bg-white focus:ring-2 focus:ring-indigo-100 placeholder-slate-400 transition-all" placeholder="Buscar depto, titular, cochera o piso..." type="text">
+<kbd class="absolute right-2.5 px-1.5 py-0.5 text-[10px] font-semibold text-slate-400 bg-white border border-slate-200 rounded shadow-xs">⌘K</kbd>
+</div>
+<!-- Botón de Notificaciones con Badge -->
+<button class="relative p-2 rounded-xl text-slate-500 hover:text-slate-800 hover:bg-slate-100/90 transition-colors" title="Notificaciones del consorcio">
+<span class="material-symbols-outlined text-[20px]">notifications</span>
+<span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-rose-500 ring-2 ring-white"></span>
+</button>
+<div class="h-5 w-px bg-slate-200 mx-0.5"></div>
+<!-- Botón Exportar Reporte -->
+<button class="hidden lg:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 bg-white border border-slate-200 hover:border-slate-300 rounded-xl hover:bg-slate-50 transition-colors shadow-xs">
+<span class="material-symbols-outlined text-[17px] text-slate-500">file_download</span>
+          Exportar
+        </button>
+<!-- Botón Primario: + Nueva Unidad -->
+<button class="inline-flex items-center gap-1.5 px-3.5 py-1.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-sm shadow-indigo-400/30 transition-all hover:scale-[1.01]">
+<span class="material-symbols-outlined text-[17px]">add</span>
+<span class="">Nueva unidad</span>
+</button>
+</div>
+</header>
+<!-- Contenido Scrollable -->
+<div class="flex-1 overflow-y-auto px-6 lg:px-8 py-6 space-y-6 mesh-gradient">
+<!-- ENCABEZADO DE SECCIÓN Y SUBTÍTULO -->
+<div class="flex flex-col sm:flex-row sm:items-end justify-between gap-3">
+<div>
+<div class="flex items-center gap-2">
+<h1 class="text-2xl lg:text-3xl font-extrabold tracking-tight text-slate-900">Departamentos y Residentes</h1>
+<span class="px-2 py-0.5 rounded-full text-[11px] font-bold bg-indigo-100 text-indigo-700">48 Unidades</span>
+</div>
+<p class="text-xs text-slate-500 mt-1">Supervisión integral de departamentos, recaudación de expensas y estados de cuenta en tiempo real.</p>
+</div>
+<!-- Indicador de Última Actualización -->
+<div class="flex items-center gap-2 text-[11px] text-slate-400 bg-white/70 backdrop-blur-sm px-3 py-1.5 rounded-lg border border-slate-200/70 shadow-xs self-start sm:self-auto">
+<span class="material-symbols-outlined text-[14px] text-emerald-600 animate-spin" style="animation-duration: 6s;">sync</span>
+<span class="">Actualizado hace 4 min</span>
+</div>
+</div>
+<!-- ======================= 4 TARJETAS KPIS ELEVADAS CON MICRO-MÉTRICAS ======================= -->
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4"><!-- KPI 1: Recaudación del Mes con barra sutil -->
+<div class="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-subtle hover:shadow-card transition-all relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-wide">Cobranza del Mes</span>
+<span class="w-8 h-8 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center font-bold text-xs">
+<span class="material-symbols-outlined text-[18px]">payments</span>
+</span>
+</div>
+<div class="mt-2.5 flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-slate-900 tracking-tight">$4.21M</span>
+<span class="text-xs text-emerald-600 font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">trending_up</span>+6.4%
+</span>
+</div>
+<div class="mt-3 space-y-1.5">
+<div class="flex items-center justify-between text-[11px]">
+<span class="text-slate-400 font-medium">Meta $4.95M</span>
+<span class="text-indigo-600 font-bold">85.1%</span>
+</div>
+<div class="w-full bg-slate-100 rounded-full h-1.5 overflow-hidden">
+<div class="bg-indigo-600 h-1.5 rounded-full" style="width: 85.1%"></div>
+</div>
+</div>
+</div>
+<!-- KPI 2: Unidades al Día vs Total -->
+<div class="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-subtle hover:shadow-card transition-all relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-wide">Unidades al Día</span>
+<span class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">verified</span>
+</span>
+</div>
+<div class="mt-2.5 flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-slate-900 tracking-tight">41</span>
+<span class="text-xs font-semibold text-slate-400">/ 48 deptos</span>
+</div>
+<div class="mt-3 pt-2 border-t border-slate-100/90 flex items-center justify-between text-[11px]">
+<span class="text-emerald-700 font-bold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]">check_circle</span> 85.4% al día
+</span>
+<span class="text-slate-400">7 pendientes</span>
+</div>
+</div>
+<!-- KPI 3: Morosidad & Saldos -->
+<div class="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-subtle hover:shadow-card transition-all relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-wide">Cartera en Mora</span>
+<span class="w-8 h-8 rounded-xl bg-rose-50 text-rose-600 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">error_outline</span>
+</span>
+</div>
+<div class="mt-2.5 flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-rose-600 tracking-tight">$740k</span>
+<span class="text-[11px] font-semibold text-rose-500 px-1.5 py-0.5 rounded bg-rose-50">4 críticas</span>
+</div>
+<div class="mt-3 pt-2 border-t border-slate-100/90 flex items-center justify-between text-[11px]">
+<span class="text-slate-500">7 unidades con saldo</span>
+<span class="text-rose-600 font-bold cursor-pointer hover:underline">Gestionar avisos</span>
+</div>
+</div>
+<!-- KPI 4: Fondo de Reserva / Expensa Promedio -->
+<div class="bg-white rounded-2xl p-4.5 border border-slate-200/80 shadow-subtle hover:shadow-card transition-all relative overflow-hidden group">
+<div class="flex items-center justify-between">
+<span class="text-xs font-semibold text-slate-500 tracking-wide">Fondo de Reserva</span>
+<span class="w-8 h-8 rounded-xl bg-slate-100 text-slate-700 flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">account_balance</span>
+</span>
+</div>
+<div class="mt-2.5 flex items-baseline gap-2">
+<span class="text-3xl font-extrabold text-slate-900 tracking-tight">$8.65M</span>
+<span class="text-[11px] text-slate-400 font-medium">disponible</span>
+</div>
+<div class="mt-3 pt-2 border-t border-slate-100/90 flex items-center justify-between text-[11px]">
+<span class="text-slate-500">Cuota Promedio: <strong class="text-slate-800 font-semibold">$168k</strong></span>
+<span class="text-emerald-600 font-semibold">+4.2%</span>
+</div>
+</div></div>
+<!-- ======================= WORKSPACE DIVIDIDO: TABLA + INSPECTOR LATERAL ======================= -->
+<div class="grid grid-cols-1 xl:grid-cols-12 gap-6 items-start pb-8">
+<!-- Columna Izquierda/Central: Listado de Departamentos (8 cols) -->
+<div class="xl:col-span-8 bg-white border border-slate-200/80 rounded-2xl shadow-card overflow-hidden">
+<!-- Barra de Filtros, Categorías y Toggle de Vistas -->
+<div class="p-4 border-b border-slate-100 flex flex-col md:flex-row md:items-center justify-between gap-3 bg-white">
+<!-- Tabs Filtro con Contador de Estado -->
+<div class="flex items-center gap-1.5 overflow-x-auto pb-1 md:pb-0 text-xs">
+<button class="px-3 py-1.5 font-bold rounded-xl bg-slate-900 text-white shadow-xs transition-colors flex items-center gap-1.5" type="button">
+<span class="">Todos</span>
+<span class="px-1.5 py-0.2 rounded-md bg-white/20 text-[10px]">48</span>
+</button>
+<button class="px-3 py-1.5 font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors flex items-center gap-1.5" type="button">
+<span class="">Al día</span>
+<span class="px-1.5 py-0.2 rounded-md bg-emerald-100 text-emerald-800 text-[10px]">41</span>
+</button>
+<button class="px-3 py-1.5 font-semibold rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors flex items-center gap-1.5" type="button">
+<span class="">Con mora</span>
+<span class="px-1.5 py-0.2 rounded-md bg-rose-100 text-rose-700 text-[10px]">7</span>
+</button>
+<button class="px-3 py-1.5 font-semibold rounded-xl text-slate-600 hover:text-slate-100 hover:bg-slate-100 transition-colors" type="button">
+<span class="">Desocupados (1)</span>
+</button>
+</div>
+<!-- Filtro de Pisos & Vista Toggle -->
+<div class="flex items-center gap-2 self-end md:self-auto">
+<div class="relative">
+<select class="text-xs bg-slate-50 border border-slate-200 rounded-xl pl-3 pr-8 py-1.5 text-slate-700 font-medium focus:ring-2 focus:ring-indigo-100 focus:border-indigo-400">
+<option>Todos los pisos (1-12)</option>
+<option>Piso 1 - 4 (Bajos)</option>
+<option>Piso 5 - 8 (Medios)</option>
+<option>Piso 9 - 11 (Altos)</option>
+<option>Piso 12 (Penthouse)</option>
+</select>
+</div>
+<!-- View Switcher (Lista / Grid) -->
+<div class="flex items-center p-0.5 bg-slate-100 rounded-xl border border-slate-200/70">
+<button class="p-1 rounded-lg bg-white text-indigo-700 shadow-xs" title="Vista Lista">
+<span class="material-symbols-outlined text-[17px] block">format_list_bulleted</span>
+</button>
+<button class="p-1 rounded-lg text-slate-400 hover:text-slate-700 transition-colors" title="Vista Cuadrícula">
+<span class="material-symbols-outlined text-[17px] block">grid_view</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Tabla de Departamentos con Personalidad -->
+<div class="overflow-x-auto">
+<table class="w-full text-left text-xs border-collapse">
+<thead><tr class="bg-slate-50/90 border-b border-slate-200/80 text-slate-400 uppercase tracking-wider text-[11px] font-bold">
+<th class="py-3.5 px-4">Unidad</th>
+<th class="py-3.5 px-4">Residente / Contacto</th>
+<th class="py-3.5 px-4">Cuota Mensual</th>
+<th class="py-3.5 px-4">Estado</th>
+<th class="py-3.5 px-4 text-right">Acciones</th>
+</tr></thead>
+<tbody class="divide-y divide-slate-100 text-slate-700" id="unitsTableBody"><!-- Fila 1: A-402 -->
+<tr class="bg-indigo-50/50 hover:bg-indigo-50/70 transition-colors cursor-pointer group unit-row" onclick="selectCard('A-402', 'Torre A · Piso 4', 'Dr. Agustín Silva', 'agustin.silva@moravia.ar', '+54 11 4821-9920', '3 Dorm · 120 m²', '$180.000', 'Al día', 'bg-emerald-50 text-emerald-700 border-emerald-200', 'Cochera #14', 'Propietario')">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<span class="px-2.5 py-1 rounded-lg bg-indigo-600 text-white font-extrabold text-xs shadow-xs tracking-tight">A-402</span>
+<span class="text-[11px] text-slate-400 font-medium">Torre A · P4</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<img alt="Agustín Silva" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuASBhNW3KhmkA4r9i_trdHAbOp1Bvj7hAGNn3JuqnZsiCvFZvYy-D0CjhHdbuPab0NpC45z7CwRDxINf7AVSdX2LwzCNK9IFQ4rTftIXPcl-owcniK7_jHLsJdSeax4yBPnioijFndOAUNxKM6bGxmE9yHsQ_qAlzLj4SRrzksxj_uloFAqJREOR-q0QSY3DzcaDQkkni7RNs_qVLhdWFGDTY2csLDhaEFPqJu4DxN_QQquTAiBX8fc1w">
+<div>
+<div class="font-semibold text-slate-900 leading-snug">Dr. Agustín Silva</div>
+<div class="text-[11px] text-indigo-600 font-medium">Propietario</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-bold text-slate-900 text-sm">$180.000</span>
+<span class="block text-[10px] text-slate-400 font-medium">Exp. ordinarias</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+Al día
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Recibo digital">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Mensaje">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Fila 2: B-102 -->
+<tr class="hover:bg-slate-50 transition-colors cursor-pointer group unit-row" onclick="selectCard('B-102', 'Torre B · Piso 1', 'Elena Bustamante', 'elena.b@moravia.ar', '+54 11 4982-1102', '2 Dorm · 85 m²', '$140.000', 'Al día', 'bg-emerald-50 text-emerald-700 border-emerald-200', 'Cochera #03', 'Inquilina')">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<span class="px-2.5 py-1 rounded-lg bg-slate-100 group-hover:bg-indigo-100 text-slate-800 group-hover:text-indigo-700 font-extrabold text-xs transition-colors">B-102</span>
+<span class="text-[11px] text-slate-400 font-medium">Torre B · P1</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<img alt="Elena Bustamante" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBt2PkpK3pIM6pL4W_x6gsJuHibzCR4nlPE4DCNWSvJMcrySckYYkHcA4NQ5OZgDw5frj1XaHIGi95VbUNFOuOUHmPiTKxmADzAJ8CCfW9xuUBCMpu7EX3d_0tTy7RkZXSsblF6f3judgJPz28Rf26JP3qvZL2DNrjy-EI0ysgX1wgQc2_oakWElbqHyGPLCCSfPMHVbu-uIGMcBfr2-t9vrkI19OE_SKCrnz2Ci7F0LfezQhU_3cmM5Q">
+<div>
+<div class="font-semibold text-slate-900 leading-snug">Elena Bustamante</div>
+<div class="text-[11px] text-slate-500 font-medium">Inquilina</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-bold text-slate-900 text-sm">$140.000</span>
+<span class="block text-[10px] text-slate-400 font-medium">Exp. ordinarias</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+Al día
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Recibo digital">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Mensaje">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Fila 3: A-702 -->
+<tr class="hover:bg-rose-50/30 transition-colors cursor-pointer group unit-row" onclick="selectCard('A-702', 'Torre A · Piso 7', 'Sofía Rossi', 'sofia.rossi@moravia.ar', '+54 11 5019-3321', '3 Dorm · 112 m²', '$185.000', 'Mora (15 días)', 'bg-rose-50 text-rose-700 border-rose-200', 'Cochera #21', 'Inquilina')">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<span class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200 font-extrabold text-xs">A-702</span>
+<span class="text-[11px] text-slate-400 font-medium">Torre A · P7</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<img alt="Sofía Rossi" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4QaVFoA22CpHDGQ_azWfytn8THTYAVv_c6W9Xf03QLvJK4IAD8R33um2QcFFbAXwa24S442lIlOEgZkRxhzBAxOKPnZlZirnRv_cAt1a-iTYWRoAKxXcaQOBScIR_UduDAXnmqXC6xl-scavgYz9iGfvxMhk3zhrXKs3VEG01MSW0il_Fw8PACuVpJVNKRABlEGsmA53ME7jht6QYlIyVti7QPztdmOmGSYFZAxbXLrweirC0DoHhuQ">
+<div>
+<div class="font-semibold text-slate-900 leading-snug">Sofía Rossi</div>
+<div class="text-[11px] text-slate-500 font-medium">Inquilina</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-bold text-rose-600 text-sm">$185.000</span>
+<span class="block text-[10px] text-rose-500 font-semibold">+ Mora $9.250</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-rose-50 text-rose-700 border border-rose-200">
+<span class="w-1.5 h-1.5 rounded-full bg-rose-500"></span>
+Mora 15d
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="px-2.5 py-1 rounded-lg bg-rose-50 text-rose-700 border border-rose-200/80 font-bold text-[11px] hover:bg-rose-100 transition-colors flex items-center gap-1 shadow-2xs">
+<span class="material-symbols-outlined text-[13px]">send</span>
+Avisar
+</button>
+</div>
+</td>
+</tr>
+<!-- Fila 4: C-301 -->
+<tr class="hover:bg-amber-50/30 transition-colors cursor-pointer group unit-row" onclick="selectCard('C-301', 'Torre C · Piso 3', 'Marcos F. Varela', 'marcos.varela@moravia.ar', '+54 11 3192-4411', '2 Dorm · 74 m²', '$135.000', 'Pendiente', 'bg-amber-50 text-amber-700 border-amber-200', 'Cochera #08', 'Propietario')">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<span class="px-2.5 py-1 rounded-lg bg-amber-50 text-amber-800 border border-amber-200 font-extrabold text-xs">C-301</span>
+<span class="text-[11px] text-slate-400 font-medium">Torre C · P3</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<div class="w-8 h-8 rounded-full bg-amber-100 text-amber-800 font-bold text-xs flex items-center justify-center ring-2 ring-slate-100">
+MV
+</div>
+<div>
+<div class="font-semibold text-slate-900 leading-snug">Marcos F. Varela</div>
+<div class="text-[11px] text-slate-500 font-medium">Propietario</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-bold text-slate-900 text-sm">$135.000</span>
+<span class="block text-[10px] text-amber-600 font-medium">Vence en 48h</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-amber-50 text-amber-800 border border-amber-200">
+<span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+Pendiente
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Recibo digital">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Notificar">
+<span class="material-symbols-outlined text-[18px]">mail</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Fila 5: PH-1201 -->
+<tr class="hover:bg-slate-50 transition-colors cursor-pointer group unit-row" onclick="selectCard('PH-1201', 'Torre A · Piso 12', 'Ignacio Werthein', 'i.werthein@moravia.ar', '+54 11 6112-8800', '4 Dorm · 290 m²', '$390.000', 'Al día', 'bg-emerald-50 text-emerald-700 border-emerald-200', 'Cochera #34/#35', 'Propietario')">
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<span class="px-2.5 py-1 rounded-lg bg-purple-100 text-purple-900 border border-purple-200 font-extrabold text-xs">PH-1201</span>
+<span class="text-[11px] text-purple-600 font-semibold">Torre A · P12</span>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<div class="flex items-center gap-2.5">
+<img alt="Ignacio Werthein" class="w-8 h-8 rounded-full object-cover ring-2 ring-slate-100" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCh2ulJFhik_b2v9d9lr8WQQMPyYKj1uktOCvA3ymhbilwoTKNuzgS0iL2L1zvz7TEBdTejE_jrnBNAluNgCgdOXPA_tbz0fQ9EP2zMoXPSxbbHc-YkCX9dF5_fSu11-XEErONsWk08QfB5IHhSTe98YilEG3DCzc6ywH9WpkDZZiy2OAJ0FnBKLLoRuLxynKnvKEFyj5aPDMZiZTmRj9JfAnyI3lHeLpXC9vfHqEIDTyVwnvzTK2kERA">
+<div>
+<div class="font-semibold text-slate-900 leading-snug">Ignacio Werthein</div>
+<div class="text-[11px] text-slate-500 font-medium">Propietario</div>
+</div>
+</div>
+</td>
+<td class="py-3.5 px-4">
+<span class="font-bold text-slate-900 text-sm">$390.000</span>
+<span class="block text-[10px] text-slate-400 font-medium">Exp. PH</span>
+</td>
+<td class="py-3.5 px-4">
+<span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[11px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+Al día
+</span>
+</td>
+<td class="py-3.5 px-4 text-right">
+<div class="inline-flex items-center gap-1">
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-slate-800 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Recibo digital">
+<span class="material-symbols-outlined text-[18px]">receipt_long</span>
+</button>
+<button class="p-1.5 rounded-lg text-slate-400 hover:text-indigo-600 hover:bg-white border border-transparent hover:border-slate-200 transition-all" title="Mensaje">
+<span class="material-symbols-outlined text-[18px]">chat</span>
+</button>
+</div>
+</td>
+</tr></tbody>
+</table>
+</div>
+<!-- Paginación Estilizada y Métricas de Lista -->
+<div class="p-4 bg-slate-50/70 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3 text-xs text-slate-500">
+<span class="font-medium">Mostrando <strong>5</strong> de <strong>48</strong> departamentos registrados</span>
+<div class="flex items-center gap-1 font-semibold">
+<button class="p-1 rounded-lg hover:bg-slate-200 text-slate-400 hover:text-slate-700 disabled:opacity-40" disabled="">
+<span class="material-symbols-outlined text-[16px]">chevron_left</span>
+</button>
+<button class="w-7 h-7 rounded-lg bg-indigo-600 text-white font-bold flex items-center justify-center shadow-xs">1</button>
+<button class="w-7 h-7 rounded-lg hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors">2</button>
+<button class="w-7 h-7 rounded-lg hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors">3</button>
+<span class="px-1 text-slate-400">...</span>
+<button class="w-7 h-7 rounded-lg hover:bg-slate-200 text-slate-700 flex items-center justify-center transition-colors">10</button>
+<button class="p-1 rounded-lg hover:bg-slate-200 text-slate-600 transition-colors">
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Columna Derecha: Panel de Inspección Detallada (4 cols) -->
+<div class="xl:col-span-4 sticky top-20 space-y-4">
+<div class="bg-white border border-slate-200/90 rounded-2xl shadow-card p-5 space-y-5">
+<!-- Cabecera de la Ficha del Depto -->
+<div class="flex items-start justify-between pb-4 border-b border-slate-100"><div class="flex items-center gap-3">
+<div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-indigo-700 to-indigo-500 text-white font-extrabold text-sm flex items-center justify-center shadow-md shadow-indigo-400/30" id="cardUnitBadge">
+A-402
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h3 class="text-lg font-extrabold text-slate-900 tracking-tight" id="cardTitle">A-402</h3>
+<span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200" id="cardBadge">
+Al día
+</span>
+</div>
+<p class="text-xs text-slate-500 mt-0.5" id="cardSub">Torre A · Piso 4 · 3 Dorm · 120 m²</p>
+</div>
+</div>
+<div class="flex items-center gap-1">
+<button class="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-colors" title="Exportar ficha individual">
+<span class="material-symbols-outlined text-[18px]">share</span>
+</button>
+<button class="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-50 rounded-lg transition-colors" title="Más opciones">
+<span class="material-symbols-outlined text-[18px]">more_vert</span>
+</button>
+</div></div>
+<!-- Ficha del Residente con Acciones Rápidas -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Residente Titular</span>
+<span class="text-[11px] text-indigo-600 font-semibold cursor-pointer hover:underline" id="cardResidentTag">Propietario residente</span>
+</div>
+<div class="p-3 rounded-xl bg-slate-50/90 border border-slate-200/70 flex items-center justify-between">
+<div class="flex items-center gap-2.5">
+<div class="w-9 h-9 rounded-xl bg-indigo-100 text-indigo-700 font-bold text-xs flex items-center justify-center" id="cardAvatarFallback">
+                    AS
+                  </div>
+<div class="min-w-0">
+<div class="text-xs font-bold text-slate-900 truncate" id="cardResidentName">Dr. Agustín Silva</div>
+<div class="text-[11px] text-slate-400 truncate max-w-[160px]" id="cardResidentEmail">agustin.silva@moravia.ar</div>
+</div>
+</div>
+<div class="flex items-center gap-1 shrink-0">
+<a class="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-200 shadow-2xs transition-colors" href="#" title="Llamar teléfono">
+<span class="material-symbols-outlined text-[16px] block">call</span>
+</a>
+<a class="p-1.5 rounded-lg bg-white border border-slate-200 text-slate-600 hover:text-indigo-600 hover:border-indigo-200 shadow-2xs transition-colors" href="#" title="Enviar WhatsApp / Correo">
+<span class="material-symbols-outlined text-[16px] block">chat</span>
+</a>
+</div>
+</div>
+</div>
+<!-- Desglose de Gastos y Expensas (Bespoke detail) -->
+<div>
+<span class="text-[11px] font-bold uppercase tracking-wider text-slate-400 block mb-2">Composición de Expensas</span>
+<div class="p-3 rounded-xl bg-slate-50/80 border border-slate-100 space-y-2 text-xs">
+<div class="flex items-center justify-between text-slate-600">
+<span class="">Expensas Ordinarias</span>
+<span class="font-semibold text-slate-900">$155.000</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<span class="flex items-center gap-1">
+                    Fondo Extraordinario
+                    <span class="material-symbols-outlined text-[14px] text-slate-400" title="Reparación ascensores torre A">info</span>
+</span>
+<span class="font-semibold text-slate-900">$18.000</span>
+</div>
+<div class="flex items-center justify-between text-slate-600">
+<span id="cardParkingLabel" class="">Cochera #14 Asignada</span>
+<span class="font-semibold text-slate-900">$7.000</span>
+</div>
+<div class="pt-2 border-t border-slate-200/70 flex items-center justify-between font-bold text-slate-900">
+<span class="">Total Cuota Mensual</span>
+<span class="text-sm text-indigo-700" id="cardFee">$180.000</span>
+</div>
+</div>
+</div>
+<!-- Estado de Cuenta y Saldo -->
+<div class="grid grid-cols-2 gap-2 text-xs">
+<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+<span class="text-slate-400 text-[10px] block font-medium">Estado período</span>
+<span class="font-bold text-emerald-700 text-xs flex items-center gap-1 mt-0.5">
+<span class="material-symbols-outlined text-[14px]">check_circle</span> Solvente
+                </span>
+</div>
+<div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+<span class="text-slate-400 text-[10px] block font-medium">Saldo pendiente</span>
+<span class="font-extrabold text-emerald-600 text-xs mt-0.5 block" id="cardBalance">$0 (Al día)</span>
+</div>
+</div>
+<!-- Historial Reciente de Pagos (Timeline) -->
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Recibos Recientes</span>
+<a class="text-[11px] text-indigo-600 hover:text-indigo-800 hover:underline font-bold" href="#">Ver historial</a>
+</div>
+<div class="space-y-1.5 text-xs">
+<!-- Recibo 1 -->
+<div class="flex items-center justify-between p-2 rounded-xl bg-slate-50/60 hover:bg-slate-100/70 transition-colors border border-transparent hover:border-slate-200">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<div>
+<span class="font-semibold text-slate-800">Noviembre 2024</span>
+<span class="block text-[10px] text-slate-400">Pagado el 05 Nov • Transf. Bancaria</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-800">$180.000</span>
+<button class="p-1 text-slate-400 hover:text-slate-700 hover:bg-white rounded" title="Descargar comprobante">
+<span class="material-symbols-outlined text-[15px]">download</span>
+</button>
+</div>
+</div>
+<!-- Recibo 2 -->
+<div class="flex items-center justify-between p-2 rounded-xl bg-slate-50/60 hover:bg-slate-100/70 transition-colors border border-transparent hover:border-slate-200">
+<div class="flex items-center gap-2">
+<div class="w-6 h-6 rounded-lg bg-emerald-100 text-emerald-700 flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-[14px]">check</span>
+</div>
+<div>
+<span class="font-semibold text-slate-800">Octubre 2024</span>
+<span class="block text-[10px] text-slate-400">Pagado el 04 Oct • Débito Autom.</span>
+</div>
+</div>
+<div class="flex items-center gap-2">
+<span class="font-bold text-slate-800">$175.000</span>
+<button class="p-1 text-slate-400 hover:text-slate-700 hover:bg-white rounded" title="Descargar comprobante">
+<span class="material-symbols-outlined text-[15px]">download</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Botones de Acción Primaria -->
+<div class="pt-2 flex items-center gap-2">
+<button class="flex-1 py-2.5 px-3 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">receipt_long</span>
+                Emitir Recibo
+              </button>
+<button class="flex-1 py-2.5 px-3 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-500/25 transition-all flex items-center justify-center gap-1.5" type="button">
+<span class="material-symbols-outlined text-[16px]">payments</span>
+                Registrar Pago
+              </button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Mini Footer Informativo Sutil -->
+<footer class="h-10 border-t border-slate-200/80 bg-white px-6 flex items-center justify-between text-[11px] text-slate-400 shrink-0"><div class="flex items-center gap-2">
+<span class="font-bold text-slate-700">Moravia Suite</span>
+<span class="">•</span>
+<span class="">Gestión Integral de Torres y Condominios</span>
+</div>
+<div class="flex items-center gap-4">
+<span class="">Soporte 24/7 Consorcios</span>
+<span class="">© 2025 Moravia Software</span>
+</div></footer>
+</div>
+<!-- SCRIPT INTERACTIVO PARA SELECCIÓN DE TARJETA -->
+<script>
+    function selectCard(unitTitle, floor, resident, email, phone, distribution, fee, status, badgeClass, parking, roleTag) {
+      document.getElementById('cardTitle').innerText = unitTitle;
+      document.getElementById('cardSub').innerText = floor + ' · ' + distribution;
+      document.getElementById('cardResidentName').innerText = resident;
+      document.getElementById('cardResidentEmail').innerText = email;
+      document.getElementById('cardFee').innerText = fee;
+      document.getElementById('cardResidentTag').innerText = roleTag || 'Residente titular';
+      document.getElementById('cardParkingLabel').innerText = parking || 'Cochera asignada';
+
+      // Badge número
+      const unitNum = unitTitle.replace('Depto ', '').replace('Penthouse ', 'PH ');
+      document.getElementById('cardUnitBadge').innerText = unitNum;
+
+      // Avatar iniciales
+      const initials = resident.split(' ').map(n => n[0]).join('').slice(0, 2).toUpperCase();
+      document.getElementById('cardAvatarFallback').innerText = initials;
+      
+      const badge = document.getElementById('cardBadge');
+      badge.innerText = status;
+      badge.className = 'inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold border ' + badgeClass;
+
+      const balance = document.getElementById('cardBalance');
+      if (status.includes('Mora')) {
+        balance.innerText = fee + ' (Vencido)';
+        balance.className = 'font-extrabold text-rose-600 text-xs mt-0.5 block';
+      } else if (status.includes('Pendiente')) {
+        balance.innerText = fee + ' (Por vencer)';
+        balance.className = 'font-extrabold text-amber-600 text-xs mt-0.5 block';
+      } else {
+        balance.innerText = '$0 (Al día)';
+        balance.className = 'font-extrabold text-emerald-600 text-xs mt-0.5 block';
+      }
+    }
+  </script>
+<div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm" id="messageResidentModal">
+<div class="bg-white w-full max-w-2xl rounded-2xl shadow-2xl border border-slate-200/90 overflow-hidden flex flex-col max-h-[92vh] animate-in fade-in zoom-in-95 duration-200">
+<!-- Header -->
+<div class="px-6 py-4 border-b border-slate-100 bg-gradient-to-r from-slate-50/80 via-white to-indigo-50/30 flex items-start justify-between">
+<div class="flex items-start gap-3.5">
+<div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 border border-indigo-100/80 flex items-center justify-center shrink-0 mt-0.5">
+<span class="material-symbols-outlined text-[22px]">mark_email_read</span>
+</div>
+<div>
+<div class="flex items-center gap-2">
+<h2 class="text-base font-bold text-slate-900 tracking-tight">Nuevo Mensaje / Notificación a Residente</h2>
+<span class="px-2 py-0.5 text-[10px] font-bold rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200">Al día</span>
+</div>
+<div class="flex flex-wrap items-center gap-2 mt-1 text-xs text-slate-500">
+<span class="font-semibold text-indigo-700 bg-indigo-50 px-2 py-0.5 rounded-md border border-indigo-100/60">Unidad A-402</span>
+<span class="">•</span>
+<span class="font-medium text-slate-700">Dr. Agustín Silva</span>
+<span class="text-[11px] text-slate-400">(Propietario)</span>
+<span class="">•</span>
+<span class="text-slate-400 flex items-center gap-1"><span class="material-symbols-outlined text-[13px]">mail</span> agustin.silva@moravia.ar</span>
+</div>
+</div>
+</div>
+<button class="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors" onclick="document.getElementById('messageResidentModal').remove()" title="Cerrar ventana">
+<span class="material-symbols-outlined text-[20px] block">close</span>
+</button>
+</div>
+<!-- Body Content -->
+<div class="p-6 overflow-y-auto space-y-4.5 text-xs text-slate-700 flex-1"><!-- Banner de Envío Omnicanal Simultáneo -->
+<div class="p-3 rounded-xl bg-slate-50/80 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5">
+  <div class="flex items-center gap-2 text-slate-700 font-semibold text-xs shrink-0">
+    <span class="flex h-2 w-2 relative">
+      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+    </span>
+    <span class="text-[11px] font-bold text-slate-800 uppercase tracking-wider">Destinos simultáneos:</span>
+  </div>
+  <div class="flex flex-wrap items-center gap-1.5 flex-1 sm:justify-end">
+    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 shadow-2xs text-[11px]">
+      <span class="material-symbols-outlined text-indigo-600 text-[14px]">notifications_active</span>
+      <span class="font-semibold text-slate-800">Push App</span>
+      <span class="text-slate-400">•</span>
+      <span class="text-emerald-600 font-medium">Activo</span>
+    </div>
+    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 shadow-2xs text-[11px]">
+      <span class="material-symbols-outlined text-emerald-600 text-[14px]">chat</span>
+      <span class="font-semibold text-slate-800">WhatsApp</span>
+      <span class="text-slate-400">•</span>
+      <span class="text-slate-600 font-medium">+54 11 4821-9920</span>
+    </div>
+    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-white border border-slate-200 shadow-2xs text-[11px]">
+      <span class="material-symbols-outlined text-indigo-600 text-[14px]">mail</span>
+      <span class="font-semibold text-slate-800">Email</span>
+      <span class="text-slate-400">•</span>
+      <span class="text-slate-600 font-medium truncate max-w-[160px]">agustin.silva@moravia.ar</span>
+    </div>
+  </div>
+</div>
+
+<!-- Asunto y Categoría -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+  <div class="sm:col-span-1">
+    <label class="block text-[11px] font-bold text-slate-600 mb-1.5">Categoría de Aviso</label>
+    <select class="w-full py-2 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-800 font-medium focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100">
+      <option selected="">Mantenimiento Preventivo</option>
+      <option>Recibo de Expensas</option>
+      <option>Aviso Administrativo</option>
+      <option>Cochera / Accesos</option>
+      <option>Asamblea Consorcial</option>
+    </select>
+  </div>
+  <div class="sm:col-span-2">
+    <label class="block text-[11px] font-bold text-slate-600 mb-1.5">Asunto de la Notificación</label>
+    <input type="text" value="Aviso de mantenimiento de montantes y suministro — Jueves 21" class="w-full py-2 px-3 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 font-medium focus:bg-white focus:border-indigo-400 focus:ring-2 focus:ring-indigo-100 transition-all">
+  </div>
+</div>
+
+<!-- Plantillas y Variables dinámicas -->
+<div class="space-y-1.5">
+  <div class="flex items-center justify-between text-[11px]">
+    <span class="font-semibold text-slate-500">Plantillas rápidas:</span>
+    <div class="flex items-center gap-1.5 text-slate-400">
+      <span class="">Insertar variable:</span>
+      <button type="button" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[10px] transition-colors">{Nombre}</button>
+      <button type="button" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[10px] transition-colors">{Unidad}</button>
+      <button type="button" class="px-1.5 py-0.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-[10px] transition-colors">{Horario}</button>
+    </div>
+  </div>
+  <div class="flex flex-wrap gap-1.5">
+    <button type="button" class="px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-700 border border-indigo-200/80 font-semibold text-[11px] hover:bg-indigo-100 transition-colors flex items-center gap-1">
+      <span class="material-symbols-outlined text-[13px]">autorenew</span> Mantenimiento Edilicio
+    </button>
+    <button type="button" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-[11px] transition-colors">
+      Comprobante Expensas Noviembre
+    </button>
+    <button type="button" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-[11px] transition-colors">
+      Aviso de Inspección Técnica
+    </button>
+    <button type="button" class="px-2.5 py-1 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 font-medium text-[11px] transition-colors">
+      Confirmación de Reserva SUM
+    </button>
+  </div>
+</div>
+
+<!-- Editor de Mensaje Ampliado -->
+<div class="border border-slate-200 rounded-xl overflow-hidden focus-within:border-indigo-400 focus-within:ring-2 focus-within:ring-indigo-100 bg-white shadow-2xs">
+  <div class="p-1.5 bg-slate-50/90 border-b border-slate-200 flex items-center justify-between">
+    <div class="flex items-center gap-0.5 text-slate-500">
+      <button type="button" title="Negrita" class="p-1 rounded hover:bg-slate-200 hover:text-slate-800 font-bold text-xs w-6 h-6 flex items-center justify-center">B</button>
+      <button type="button" title="Cursiva" class="p-1 rounded hover:bg-slate-200 hover:text-slate-800 italic text-xs w-6 h-6 flex items-center justify-center">I</button>
+      <div class="w-px h-3.5 bg-slate-300 mx-1"></div>
+      <button type="button" title="Lista viñetas" class="p-1 rounded hover:bg-slate-200 hover:text-slate-800 w-6 h-6 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[15px]">format_list_bulleted</span>
+      </button>
+      <button type="button" title="Enlace" class="p-1 rounded hover:bg-slate-200 hover:text-slate-800 w-6 h-6 flex items-center justify-center">
+        <span class="material-symbols-outlined text-[15px]">link</span>
+      </button>
+    </div>
+    <div class="flex items-center gap-2 pr-1">
+      <span class="text-[10px] text-emerald-600 font-semibold flex items-center gap-0.5">
+        <span class="material-symbols-outlined text-[12px]">check</span> Guardado automático
+      </span>
+      <span class="text-[10px] text-slate-400 font-medium">248 / 1.000 caracteres</span>
+    </div>
+  </div>
+  <textarea rows="5" class="w-full p-3.5 text-xs text-slate-800 border-0 focus:ring-0 resize-none font-normal leading-relaxed" placeholder="Escriba aquí el cuerpo del mensaje o comunicado para el residente...">Estimado Dr. Agustín Silva,
+
+Le informamos que el próximo jueves 21 de noviembre, entre las 09:00 y las 12:30 hs, se realizará la revisión reglamentaria de columnas de distribución y montantes en la Torre A (pisos 3 al 6). No requerirá ingreso a la unidad A-402, salvo aviso expreso del personal técnico acreditado.
+
+Atentamente,
+Administración Torre Alvear Premium</textarea>
+</div>
+
+<!-- Archivo Adjunto Rediseñado -->
+<div class="flex items-center justify-between p-3 rounded-xl bg-slate-50/80 border border-slate-200 hover:border-slate-300 transition-colors">
+  <div class="flex items-center gap-3">
+    <div class="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-100 text-indigo-700 flex items-center justify-center shrink-0 shadow-2xs">
+      <span class="material-symbols-outlined text-[19px]">picture_as_pdf</span>
+    </div>
+    <div>
+      <div class="text-xs font-bold text-slate-800 flex items-center gap-2">
+        <span class="">Cronograma_Mantenimiento_TorreA.pdf</span>
+        <span class="text-[10px] font-semibold text-slate-500 bg-white px-1.5 py-0.5 rounded border border-slate-200">240 KB</span>
+      </div>
+      <div class="text-[10px] text-slate-400 mt-0.5">Adjunto validado automáticamente por el consorcio • Formato PDF digital</div>
+    </div>
+  </div>
+  <div class="flex items-center gap-2">
+    <button type="button" class="text-xs font-semibold text-slate-600 hover:text-slate-900 px-2.5 py-1.5 hover:bg-slate-200/80 rounded-lg transition-colors flex items-center gap-1">
+      <span class="material-symbols-outlined text-[15px]">visibility</span> Vista previa
+    </button>
+    <button type="button" class="text-xs font-bold text-indigo-600 hover:text-indigo-800 px-2.5 py-1.5 hover:bg-indigo-50 rounded-lg transition-colors flex items-center gap-1">
+      <span class="material-symbols-outlined text-[15px]">sync_alt</span> Reemplazar
+    </button>
+  </div>
+</div></div>
+<!-- Footer / Acciones -->
+<div class="px-6 py-4 bg-slate-50/90 border-t border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-3"><div class="flex items-center gap-1.5 text-xs text-slate-500">
+  <span class="material-symbols-outlined text-[16px] text-slate-400">lock</span>
+  <span class="text-[11px] font-medium leading-tight">Registro automático en bitácora histórica y copia archivada según política de consorcio.</span>
+</div>
+<div class="flex items-center gap-2 w-full sm:w-auto justify-end shrink-0">
+  <button type="button" onclick="document.getElementById('messageResidentModal').remove()" class="px-4 py-2 text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-slate-200/80 rounded-xl transition-colors">
+    Cancelar
+  </button>
+  <button type="button" onclick="document.getElementById('messageResidentModal').remove()" class="inline-flex items-center gap-1.5 px-4.5 py-2 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-xl shadow-md shadow-indigo-500/25 transition-all hover:scale-[1.01]">
+    <span class="material-symbols-outlined text-[16px]">send</span>
+    <span class="">Enviar a todos los canales (3)</span>
+  </button>
+</div></div>
+</div>
+</div>
+
+</body></html>
