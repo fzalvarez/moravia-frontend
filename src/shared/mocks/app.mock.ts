@@ -19,10 +19,3 @@ export const resumenLiquidacionesMock: ResumenLiquidacionesApi = {
   total_emitido: "18452.60",
   pendientes_de_emitir: [],
 };
-
-/** `GET /auth/me` (subconjunto que usa el marco de la app). */
-export const usuarioMock = {
-  nombre_usuario: "admin",
-  tipo: "personal" as const,
-  roles: ["administrador"],
-};

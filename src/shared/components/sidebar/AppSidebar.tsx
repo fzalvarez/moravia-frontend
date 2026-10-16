@@ -1,4 +1,4 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import {
   BarChart3Icon,
   Building2Icon,
@@ -14,11 +14,9 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { formatFecha, nombrePeriodo } from "@/shared/lib/formato";
-import {
-  periodoActualMock as periodo,
-  resumenLiquidacionesMock as resumen,
-  usuarioMock as usuario,
-} from "@/shared/mocks/app.mock";
+import { periodoActualMock as periodo, resumenLiquidacionesMock as resumen } from "@/shared/mocks/app.mock";
+import { useAuthStore } from "@/features/auth/store/auth.store";
+import { logout } from "@/features/auth/services/logout.service";
 
 type NavItem = { label: string; icon: typeof Building2Icon; to: string };
 
@@ -57,6 +55,14 @@ type AppSidebarProps = {
 };
 
 export function AppSidebar({ isMobileOpen, onNavigate }: AppSidebarProps) {
+  const usuario = useAuthStore((s) => s.usuario);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await logout();
+    navigate("/login", { replace: true });
+  };
+
   const linkCls = ({ isActive }: { isActive: boolean }) =>
     cn(
       "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-colors",
@@ -129,14 +135,17 @@ export function AppSidebar({ isMobileOpen, onNavigate }: AppSidebarProps) {
       <div className="p-3.5 border-t border-gray-100">
         <div className="flex items-center gap-2.5 p-2 rounded-xl">
           <div className="w-9 h-9 rounded-full bg-brand-100 text-brand-700 font-bold text-sm flex items-center justify-center ring-2 ring-brand-50">
-            {usuario.nombre_usuario.charAt(0).toUpperCase()}
+            {usuario?.nombre_usuario.charAt(0).toUpperCase()}
           </div>
           <div className="flex-1 min-w-0">
-            <p className="text-xs font-bold text-gray-900 truncate">{usuario.nombre_usuario}</p>
-            <p className="text-[11px] text-brand-500 font-medium capitalize truncate">{usuario.roles.join(", ")}</p>
+            <p className="text-xs font-bold text-gray-900 truncate">{usuario?.nombre_usuario}</p>
+            <p className="text-[11px] text-brand-500 font-medium capitalize truncate">
+              {usuario?.tipo === "departamento" ? "Cuenta de departamento" : usuario?.roles.join(", ")}
+            </p>
           </div>
           <button
             type="button"
+            onClick={handleLogout}
             title="Cerrar sesión"
             aria-label="Cerrar sesión"
             className="p-1.5 rounded-lg text-gray-400 hover:text-error-600 hover:bg-gray-100 transition-colors"
