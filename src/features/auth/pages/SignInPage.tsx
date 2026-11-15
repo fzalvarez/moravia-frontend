@@ -1,4 +1,6 @@
-import { Building2Icon } from "lucide-react";
+import { Building2Icon, EyeIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { entrarEnMaqueta, MAQUETA_DISPONIBLE } from "../services/maqueta.service";
 import { SignInForm } from "../components/SignInForm";
 
 export default function SignInPage() {
@@ -27,6 +29,16 @@ export default function SignInPage() {
         <p className="mt-6 text-xs text-gray-500 leading-relaxed">
           ¿Olvidó su contraseña o aún no activó su cuenta? Solicite a la administración un código de acceso.
         </p>
+
+        {MAQUETA_DISPONIBLE && (
+          <div className="mt-6 pt-6 border-t border-dashed border-gray-200">
+            <Button type="button" variant="outline" className="w-full rounded-xl" onClick={entrarEnMaqueta}>
+              <EyeIcon className="size-4" />
+              Entrar a la maqueta sin backend
+            </Button>
+            <p className="mt-2 text-[11px] text-center text-gray-400">Solo en desarrollo. Las pantallas usan datos de ejemplo.</p>
+          </div>
+        )}
       </div>
 
       <p className="mt-10 text-xs font-semibold text-gray-400">Moravia v{__APP_VERSION__}</p>
