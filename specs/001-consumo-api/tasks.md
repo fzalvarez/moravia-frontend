@@ -14,7 +14,7 @@ verificación contra el backend local, commit y push.
 - [x] F5 Departamentos y anexos (SCREENS §3), sustituye la maqueta
 - [x] F6 Personas y ocupantes (SCREENS §4)
 - [x] F7 Configuración financiera: tipos, conceptos, periodos y su configuración (SCREENS §5)
-- [ ] F8 Gastos, proveedores, categorías y comprobantes (SCREENS §6)
+- [x] F8 Gastos, proveedores, categorías y comprobantes (SCREENS §6)
 - [ ] F9 Liquidaciones del periodo y cierre (SCREENS §8)
 - [ ] F10 Cuenta del departamento: estado de cuenta, movimientos, pagos, ajustes y multas (SCREENS §7)
 - [ ] F11 Multas: política y generación (SCREENS §9)
