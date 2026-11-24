@@ -5,6 +5,7 @@ import {
   FileTextIcon,
   GavelIcon,
   KeyRoundIcon,
+  LayersIcon,
   MegaphoneIcon,
   ReceiptIcon,
   ShieldCheckIcon,
@@ -26,6 +27,7 @@ export const SECCIONES: { label: string; items: Seccion[] }[] = [
   {
     label: "Condominio",
     items: [
+      { label: "Estructura", icon: LayersIcon, to: "/estructura", descripcion: "Edificio o torres, pisos y ubicación", visible: (p) => p.puede("departamentos.ver") },
       { label: "Departamentos", icon: Building2Icon, to: "/departamentos", descripcion: "Unidades, anexos y ocupantes", visible: (p) => p.puede("departamentos.ver") },
       { label: "Personas", icon: UsersIcon, to: "/personas", descripcion: "Propietarios, residentes y sus vínculos", visible: (p) => p.puede("personas.ver") },
       { label: "Avisos", icon: MegaphoneIcon, to: "/avisos", descripcion: "Comunicados a los departamentos", visible: (p) => p.esAdministrador },

@@ -24,6 +24,7 @@ import LiquidacionPage from "@/features/liquidaciones/pages/LiquidacionPage";
 import MultasPage from "@/features/multas/pages/MultasPage";
 import ReportesPage from "@/features/reportes/pages/ReportesPage";
 import AvisosPage from "@/features/avisos/pages/AvisosPage";
+import EstructuraPage from "@/features/estructura/pages/EstructuraPage";
 
 export const router = createBrowserRouter([
   {
@@ -35,6 +36,7 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           { index: true, element: <InicioPage />, handle: { titulo: "Inicio" } },
+          { path: "estructura", element: <EstructuraPage />, handle: { titulo: "Estructura" } },
           { path: "departamentos", element: <DepartamentosPage />, handle: { titulo: "Departamentos" } },
           { path: "departamentos/:id", element: <DepartamentoPage />, handle: { titulo: "Departamento" } },
           { path: "personas", element: <PersonasPage />, handle: { titulo: "Personas" } },
