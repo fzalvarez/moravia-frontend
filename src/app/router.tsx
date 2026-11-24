@@ -20,6 +20,8 @@ import PeriodoPage from "@/features/periodos/pages/PeriodoPage";
 import GastosPage from "@/features/gastos/pages/GastosPage";
 import GastoPage from "@/features/gastos/pages/GastoPage";
 import ProveedoresPage from "@/features/gastos/pages/ProveedoresPage";
+import LiquidacionesPage from "@/features/liquidaciones/pages/LiquidacionesPage";
+import LiquidacionPage from "@/features/liquidaciones/pages/LiquidacionPage";
 
 export const router = createBrowserRouter([
   {
@@ -40,6 +42,8 @@ export const router = createBrowserRouter([
           { path: "gastos", element: <GastosPage />, handle: { titulo: "Gastos" } },
           { path: "gastos/:id", element: <GastoPage />, handle: { titulo: "Gasto" } },
           { path: "proveedores", element: <ProveedoresPage />, handle: { titulo: "Proveedores" } },
+          { path: "liquidaciones", element: <LiquidacionesPage />, handle: { titulo: "Liquidaciones" } },
+          { path: "liquidaciones/:id", element: <LiquidacionPage />, handle: { titulo: "Liquidación" } },
           { path: "cuentas", element: <CuentasPage />, handle: { titulo: "Cuentas de acceso" } },
           { path: "cuentas/:id", element: <CuentaDetallePage />, handle: { titulo: "Cuenta" } },
           { path: "roles", element: <RolesPage />, handle: { titulo: "Roles y permisos" } },

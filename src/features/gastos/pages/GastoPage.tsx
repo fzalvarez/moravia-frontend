@@ -5,8 +5,8 @@ import { toast } from "sonner";
 import { PlusIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Confirmar, Modal } from "@/shared/components/app/Dialogos";
-import { Campo, Textarea } from "@/shared/components/app/Formulario";
+import { ConMotivo, Confirmar, Modal } from "@/shared/components/app/Dialogos";
+import { Campo } from "@/shared/components/app/Formulario";
 import { Importe } from "@/shared/components/app/Importe";
 import { Datos, Encabezado, Etiqueta, Tarjeta } from "@/shared/components/app/Pagina";
 import { ErrorConsulta, Tabla } from "@/shared/components/app/Tabla";
@@ -190,18 +190,6 @@ export default function GastoPage() {
         </Modal>
       )}
     </>
-  );
-}
-
-/** Confirmación con motivo obligatorio (anulaciones). */
-export function ConMotivo({ titulo, descripcion, onCerrar, onConfirmar }: { titulo: string; descripcion: string; onCerrar: () => void; onConfirmar: (motivo: string) => Promise<void> }) {
-  const [motivo, setMotivo] = useState("");
-  return (
-    <Confirmar abierto onCerrar={onCerrar} titulo={titulo} descripcion={descripcion} confirmar="Anular" peligro deshabilitado={!motivo.trim()} onConfirmar={() => onConfirmar(motivo.trim())}>
-      <Campo id="motivo" label="Motivo">
-        <Textarea id="motivo" value={motivo} onChange={(e) => setMotivo(e.target.value)} autoFocus />
-      </Campo>
-    </Confirmar>
   );
 }
 

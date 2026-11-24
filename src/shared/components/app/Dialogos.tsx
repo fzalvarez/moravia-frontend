@@ -4,8 +4,8 @@ import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
-import { getApiErrorMessage } from "@/shared/lib/http-error";
-import { ErrorFormulario } from "./Formulario";
+import { getApiErrorDetails, getApiErrorMessage } from "@/shared/lib/http-error";
+import { Campo, ErrorFormulario, Textarea } from "./Formulario";
 
 type ModalProps = {
   abierto: boolean;
@@ -68,15 +68,18 @@ type ConfirmarProps = {
 export function Confirmar({ abierto, onCerrar, titulo, descripcion, children, confirmar, peligro, onConfirmar, deshabilitado }: ConfirmarProps) {
   const [enCurso, setEnCurso] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [detalles, setDetalles] = useState<Record<string, string>>({});
 
   const ejecutar = async () => {
     setEnCurso(true);
     setError(null);
+    setDetalles({});
     try {
       await onConfirmar();
       onCerrar();
     } catch (e) {
       setError(getApiErrorMessage(e, "No se pudo completar la operación."));
+      setDetalles(getApiErrorDetails(e));
     } finally {
       setEnCurso(false);
     }
@@ -107,6 +110,15 @@ export function Confirmar({ abierto, onCerrar, titulo, descripcion, children, co
     >
       {children}
       <ErrorFormulario mensaje={error} />
+      {Object.keys(detalles).length > 0 && (
+        <ul className="text-[13px] text-error-700 list-disc pl-5 space-y-0.5">
+          {Object.entries(detalles).map(([campo, mensaje]) => (
+            <li key={campo}>
+              <strong>{campo}:</strong> {mensaje}
+            </li>
+          ))}
+        </ul>
+      )}
     </Modal>
   );
 }
@@ -142,5 +154,17 @@ export function CodigoActivacion({ codigo, expira, usuario, className }: { codig
         Se usa en la pantalla «Activar cuenta».
       </p>
     </div>
+  );
+}
+
+/** Confirmación con motivo obligatorio (anulaciones). */
+export function ConMotivo({ titulo, descripcion, onCerrar, onConfirmar }: { titulo: string; descripcion: string; onCerrar: () => void; onConfirmar: (motivo: string) => Promise<void> }) {
+  const [motivo, setMotivo] = useState("");
+  return (
+    <Confirmar abierto onCerrar={onCerrar} titulo={titulo} descripcion={descripcion} confirmar="Anular" peligro deshabilitado={!motivo.trim()} onConfirmar={() => onConfirmar(motivo.trim())}>
+      <Campo id="motivo" label="Motivo">
+        <Textarea id="motivo" value={motivo} onChange={(e) => setMotivo(e.target.value)} autoFocus />
+      </Campo>
+    </Confirmar>
   );
 }
