@@ -1,7 +1,7 @@
 import { AlertCircleIcon, Building2Icon, HandCoinsIcon, WalletIcon } from "lucide-react";
 import type { ReactNode } from "react";
 import { formatImporte, nombrePeriodo } from "@/shared/lib/formato";
-import { periodoActualMock as periodo } from "@/shared/mocks/app.mock";
+import { periodoActualMock as periodo } from "../mocks/departamentos.mock";
 import { morosidadMock, recaudacionMock, totalesDepartamentosMock } from "../mocks/departamentos.mock";
 
 type MetricaProps = {

@@ -1,11 +1,9 @@
 import { useAuthStore } from "../store/auth.store";
 import { getMe } from "./getMe.service";
 import { refrescarToken } from "./refrescarToken.service";
-import { restaurarMaqueta } from "./maqueta.service";
 
 /** Al cargar la app: si la cookie sigue vigente, recupera token y usuario. */
 export const restaurarSesion = async (): Promise<void> => {
-  if (restaurarMaqueta()) return;
   const store = useAuthStore.getState();
   const token = await refrescarToken();
   if (!token) return store.clearStore();

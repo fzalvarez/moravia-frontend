@@ -1,10 +1,11 @@
-import { createBrowserRouter, Navigate } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import { ProtectedLayout } from "./layouts/ProtectedLayout";
 import AdminLayout from "./layouts/AdminLayout";
 import AuthLayout from "./layouts/AuthLayout";
-import DepartamentosPage from "@/features/departamentos/pages/DepartamentosPage";
 import SignInPage from "@/features/auth/pages/SignInPage";
+import ActivarPage from "@/features/auth/pages/ActivarPage";
 import InicioPage from "@/features/inicio/pages/InicioPage";
+import EstadoPage from "@/features/inicio/pages/EstadoPage";
 import Error404 from "@/features/error-pages/pages/Error404";
 import EnConstruccion from "@/shared/components/EnConstruccion";
 
@@ -17,20 +18,9 @@ export const router = createBrowserRouter([
       {
         element: <AdminLayout />,
         children: [
-          {
-            index: true,
-            element: <Navigate to="/departamentos" replace />,
-          },
-          {
-            path: "departamentos",
-            element: <DepartamentosPage />,
-            handle: { titulo: "Departamentos" },
-          },
-          {
-            // Secciones del menú aún sin pantalla.
-            path: ":seccion",
-            element: <EnConstruccion />,
-          },
+          { index: true, element: <InicioPage />, handle: { titulo: "Inicio" } },
+          // Secciones del menú aún sin pantalla (specs/001-consumo-api).
+          { path: ":seccion", element: <EnConstruccion /> },
         ],
       },
     ],
@@ -38,18 +28,10 @@ export const router = createBrowserRouter([
   {
     element: <AuthLayout />,
     children: [
-      {
-        path: "/login",
-        element: <SignInPage />,
-      },
+      { path: "/login", element: <SignInPage /> },
+      { path: "/activar", element: <ActivarPage /> },
     ],
   },
-  {
-    path: "/estado",
-    element: <InicioPage />,
-  },
-  {
-    path: "*",
-    element: <Error404 />,
-  },
+  { path: "/estado", element: <EstadoPage /> },
+  { path: "*", element: <Error404 /> },
 ]);

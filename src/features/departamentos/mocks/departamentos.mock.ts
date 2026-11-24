@@ -7,6 +7,7 @@ import type {
   DepartamentoFicha,
   MorosidadApi,
   MorosidadFilaApi,
+  PeriodoApi,
   PagoApi,
   PersonaApi,
   RecaudacionTotalesApi,
@@ -14,7 +15,6 @@ import type {
   TipoDepartamentoApi,
   TipoVinculo,
 } from "../types";
-import { periodoActualMock } from "@/shared/mocks/app.mock";
 
 
 const TIPOS: Record<string, TipoDepartamentoApi> = {
@@ -313,4 +313,12 @@ export const recaudacionMock: RecaudacionTotalesApi = {
   pagos: "10842.37",
   reversiones: "352.10",
   neto: "10490.27",
+};
+
+export const periodoActualMock: PeriodoApi = {
+  id: "per-2026-10",
+  anio: 2026,
+  mes: 10,
+  fecha_limite: "2026-10-20",
+  estado: "abierto",
 };

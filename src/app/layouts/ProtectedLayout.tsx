@@ -3,9 +3,11 @@ import { Navigate, Outlet, useLocation } from "react-router-dom";
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { refrescarToken } from "@/features/auth/services/refrescarToken.service";
 import SplashScreen from "@/shared/components/SplashScreen";
+import SoloPortalPage from "@/features/auth/pages/SoloPortalPage";
 
 export function ProtectedLayout() {
   const estado = useAuthStore((s) => s.estado);
+  const tipo = useAuthStore((s) => s.usuario?.tipo);
   const renovarEn = useAuthStore((s) => s.renovarEn);
   const clearStore = useAuthStore((s) => s.clearStore);
   const location = useLocation();
@@ -21,5 +23,6 @@ export function ProtectedLayout() {
 
   if (estado === "verificando") return <SplashScreen />;
   if (estado === "anonimo") return <Navigate to="/login" replace state={{ from: location.pathname }} />;
+  if (tipo === "departamento") return <SoloPortalPage />;
   return <Outlet />;
 }

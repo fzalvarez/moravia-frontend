@@ -1,13 +1,14 @@
 import { ChevronRightIcon, MenuIcon } from "lucide-react";
 import { useMatches } from "react-router-dom";
 import { nombrePeriodo } from "@/shared/lib/formato";
-import { periodoActualMock as periodo } from "@/shared/mocks/app.mock";
+import { usePeriodoVigente } from "@/features/periodos/hooks/usePeriodoVigente";
 
 type AppHeaderProps = {
   onToggleSidebar: () => void;
 };
 
 export function AppHeader({ onToggleSidebar }: AppHeaderProps) {
+  const { vigente } = usePeriodoVigente();
   const titulo = useMatches()
     .map((m) => (m.handle as { titulo?: string } | undefined)?.titulo)
     .filter(Boolean)
@@ -34,9 +35,11 @@ export function AppHeader({ onToggleSidebar }: AppHeaderProps) {
         )}
       </div>
 
-      <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-success-50 text-success-700 border border-success-200">
-        Periodo {nombrePeriodo(periodo.anio, periodo.mes)} · {periodo.estado}
-      </span>
+      {vigente && (
+        <span className="hidden md:inline-flex items-center px-2 py-0.5 rounded-md text-[10px] font-semibold bg-success-50 text-success-700 border border-success-200">
+          Periodo {nombrePeriodo(vigente.anio, vigente.mes)} · {vigente.estado}
+        </span>
+      )}
     </header>
   );
 }
