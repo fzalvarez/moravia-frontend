@@ -9,7 +9,7 @@ verificación contra el backend local, commit y push.
 
 - [x] F1 Base técnica: TanStack Query, tipos generados (`pnpm api:tipos`), `VITE_API_URL` con credenciales (F-015), helpers de error y paginación
 - [x] F2 Sesión: `/activar`, menú según permisos, bloqueo de cuentas de departamento (F-014), periodo vigente real en el menú, inicio sin maqueta
-- [ ] F3 Componentes comunes: tabla con paginador, campo con error del backend, confirmación, panel de código de activación, estados 403/404, clave de idempotencia
+- [x] F3 Componentes comunes: tabla con paginador, campo con error del backend, confirmación, panel de código de activación, estados 403/404, clave de idempotencia
 - [ ] F4 Cuentas, roles y permisos (SCREENS §2)
 - [ ] F5 Departamentos y anexos (SCREENS §3), sustituye la maqueta
 - [ ] F6 Personas y ocupantes (SCREENS §4)

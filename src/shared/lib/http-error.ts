@@ -41,3 +41,11 @@ export function getApiErrorDetails(error: unknown): Record<string, string> {
 export function getHttpStatus(error: unknown): number | null {
   return error instanceof AxiosError ? (error.response?.status ?? null) : null;
 }
+
+/** Mensaje para mostrar una consulta fallida (SCREENS §0): 403, 404 o el del backend. */
+export function mensajeDeError(error: unknown): string {
+  const status = getHttpStatus(error);
+  if (status === 403) return "Sin permiso para ver esta información.";
+  if (status === 404) return "No encontrado o no visible para su cuenta.";
+  return getApiErrorMessage(error, "No se pudo cargar la información.");
+}

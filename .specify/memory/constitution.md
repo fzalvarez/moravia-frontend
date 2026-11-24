@@ -34,11 +34,13 @@ dependencias ni pantallas fuera del alcance aprobado.
 ## Restricciones técnicas
 
 - Vite + React 19 + TypeScript, Tailwind 4 + shadcn/Radix, react-router, react-hook-form
-  + zod, axios y zustand (F-009), pnpm.
-- Estructura por feature (`pages`, `components`, `services`, `types`, `mappers`,
-  `validation`); un servicio por operación que devuelve `ServiceResponse<T>`.
+  + zod, axios y zustand para la sesión (F-009), TanStack Query para los datos (F-010),
+  pnpm.
+- Tipos de la API generados del OpenAPI (`pnpm api:tipos`, F-011); no se escriben a mano.
+- Estructura por feature (`pages`, `components`, `services`, `hooks`, `validation`); un
+  servicio por operación. Los servicios que usa TanStack Query lanzan el error de axios.
 - Fechas de calendario en `America/Lima`, igual que el backend (D-059).
-- `pnpm build` y `pnpm lint` deben pasar antes de cerrar una unidad.
+- `pnpm build` y `pnpm lint` deben pasar antes de cerrar una unidad (F-012).
 
 ## Flujo de trabajo
 
@@ -55,4 +57,4 @@ Se trabaja en `master`, sin ramas. Un commit por unidad cerrada.
 Esta constitución prevalece sobre las especificaciones y planes. Modificarla requiere
 aprobación del usuario y una nueva versión (semver).
 
-**Versión**: 1.0.0 | **Ratificada**: 2026-11-15 | **Última enmienda**: 2026-11-15
+**Versión**: 1.1.0 | **Ratificada**: 2026-11-15 | **Última enmienda**: 2026-11-24 (F-010 a F-012, aprobadas por el usuario)

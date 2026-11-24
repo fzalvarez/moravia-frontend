@@ -36,3 +36,22 @@ export function nombrePeriodo(anio: number, mes: number): string {
 export function iniciales(nombres: string, apellidos: string): string {
   return `${nombres.charAt(0)}${apellidos.charAt(0)}`.toUpperCase();
 }
+
+export { MESES };
+
+/** Fecha y hora ISO → "24/11/2026 13:45" en la hora de Lima. */
+export function formatFechaHora(iso: string): string {
+  return new Date(iso).toLocaleString("es-PE", {
+    timeZone: "America/Lima",
+    day: "2-digit",
+    month: "2-digit",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit",
+  });
+}
+
+/** Hoy en America/Lima como "YYYY-MM-DD" (D-059), no la zona del dispositivo. */
+export function hoyLima(): string {
+  return new Intl.DateTimeFormat("en-CA", { timeZone: "America/Lima" }).format(new Date());
+}
