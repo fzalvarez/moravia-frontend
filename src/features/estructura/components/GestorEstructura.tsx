@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Building2Icon, MinusIcon, PencilIcon, PlusIcon, Trash2Icon } from "lucide-react";
@@ -12,6 +12,7 @@ import { getApiErrorMessage } from "@/shared/lib/http-error";
 import {
   actualizarDepartamento,
   crearDepartamento,
+  eliminarDepartamento,
   listarTodosDepartamentos,
   type Departamento,
 } from "@/features/departamentos/services/departamentos.service";
@@ -35,6 +36,8 @@ type Dialogo =
   | { tipo: "eliminar"; torre: Torre }
   | { tipo: "depto"; torre: Torre; piso: number }
   | { tipo: "asignar"; depto: Departamento }
+  | { tipo: "acciones"; depto: Departamento }
+  | { tipo: "eliminar-depto"; depto: Departamento }
   | null;
 
 /** Torres, pisos y departamentos de una estructura ya definida (referencia 001). */
@@ -42,6 +45,7 @@ export function GestorEstructura({ estructura: e, editable }: { estructura: Estr
   const qc = useQueryClient();
   const [torreId, setTorreId] = useState(e.torres[0]?.id ?? "");
   const [dialogo, setDialogo] = useState<Dialogo>(null);
+  const navigate = useNavigate();
   const deptos = useQuery({ queryKey: CLAVE_DEPTOS_ESTRUCTURA, queryFn: () => listarTodosDepartamentos() });
   const torre = e.torres.find((t) => t.id === torreId) ?? e.torres[0];
   const condominio = e.tipo === "condominio";
@@ -146,16 +150,17 @@ export function GestorEstructura({ estructura: e, editable }: { estructura: Estr
                   </div>
                   <div className="flex flex-wrap gap-1.5">
                     {enPiso.map((d) => (
-                      <Link
+                      <button
                         key={d.id}
-                        to={`/departamentos/${d.id}`}
+                        type="button"
+                        onClick={() => (editable ? setDialogo({ tipo: "acciones", depto: d }) : navigate(`/departamentos/${d.id}`))}
                         className={cn(
                           "px-2.5 py-1 rounded-lg text-[12px] font-bold transition",
                           d.activo ? "bg-surface-container text-gray-800 hover:bg-brand-50 hover:text-brand-700" : "bg-gray-50 text-gray-400 line-through"
                         )}
                       >
                         {d.codigo}
-                      </Link>
+                      </button>
                     ))}
                   </div>
                   {editable && (
@@ -248,6 +253,40 @@ export function GestorEstructura({ estructura: e, editable }: { estructura: Estr
           onHecho={refrescar}
         />
       )}
+      {dialogo?.tipo === "acciones" && (
+        <Confirmar
+          abierto
+          onCerrar={() => setDialogo(null)}
+          titulo={`Departamento ${dialogo.depto.codigo}`}
+          descripcion={`${condominio ? `Torre ${torre?.nombre} · ` : ""}Piso ${dialogo.depto.piso}${dialogo.depto.activo ? "" : " · desactivado"}`}
+          confirmar="Abrir ficha"
+          onConfirmar={async () => navigate(`/departamentos/${dialogo.depto.id}`)}
+        >
+          <div className="grid grid-cols-2 gap-2">
+            <Button variant="secondary" onClick={() => setDialogo({ tipo: "asignar", depto: dialogo.depto })} disabled={!dialogo.depto.activo}>
+              Mover de piso o torre
+            </Button>
+            <Button variant="outline" className="text-error-600" onClick={() => setDialogo({ tipo: "eliminar-depto", depto: dialogo.depto })}>
+              <Trash2Icon className="size-3.5" /> Eliminar
+            </Button>
+          </div>
+        </Confirmar>
+      )}
+      {dialogo?.tipo === "eliminar-depto" && (
+        <Confirmar
+          abierto
+          onCerrar={() => setDialogo(null)}
+          titulo={`Eliminar ${dialogo.depto.codigo}`}
+          descripcion="Solo para corregir un alta errónea: se borra con sus estacionamientos y depósitos. Con ocupantes, cuenta de acceso, liquidaciones, pagos u otro historial no se puede eliminar; en ese caso desactívelo o muévalo a otra torre."
+          confirmar="Eliminar definitivamente"
+          peligro
+          onConfirmar={async () => {
+            await eliminarDepartamento(dialogo.depto.id);
+            refrescar();
+            toast.success(`Departamento ${dialogo.depto.codigo} eliminado.`);
+          }}
+        />
+      )}
       {dialogo?.tipo === "asignar" && <Asignar estructura={e} depto={dialogo.depto} onCerrar={() => setDialogo(null)} onHecho={refrescar} />}
     </div>
   );
@@ -305,14 +344,14 @@ function NuevoEnPiso({ estructura, torre, piso, existentes, onCerrar, onHecho }:
 }
 
 function Asignar({ estructura, depto, onCerrar, onHecho }: { estructura: Estructura; depto: Departamento; onCerrar: () => void; onHecho: () => void }) {
-  const [torreId, setTorreId] = useState(estructura.torres[0]?.id ?? "");
+  const [torreId, setTorreId] = useState(depto.torre_id ?? estructura.torres[0]?.id ?? "");
   const torre = estructura.torres.find((t) => t.id === torreId);
   const [piso, setPiso] = useState(String(depto.piso && torre && depto.piso <= torre.pisos && depto.piso >= 1 ? depto.piso : 1));
   return (
     <Confirmar
       abierto
       onCerrar={onCerrar}
-      titulo={`Ubicar ${depto.codigo}`}
+      titulo={depto.torre_id ? `Mover ${depto.codigo}` : `Ubicar ${depto.codigo}`}
       confirmar="Guardar"
       deshabilitado={!torre || !piso}
       onConfirmar={async () => {

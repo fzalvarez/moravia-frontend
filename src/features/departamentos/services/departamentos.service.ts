@@ -62,3 +62,8 @@ export const listarTodosDepartamentos = async (activo?: boolean): Promise<Depart
     if (todos.length >= p.total || p.items.length === 0) return todos;
   }
 };
+
+/** Solo sin historial (D-062); si no, el backend responde 409 y hay que desactivarlo. */
+export const eliminarDepartamento = async (id: string): Promise<void> => {
+  await api.delete(`/departamentos/${id}`);
+};

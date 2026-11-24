@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -21,6 +22,7 @@ import {
   asignarTipoDepartamento,
   clavesDepartamentos,
   desactivarDepartamento,
+  eliminarDepartamento,
   reactivarDepartamento,
   type Departamento,
 } from "../services/departamentos.service";
@@ -30,7 +32,8 @@ export function DatosDepartamento({ departamento: d }: { departamento: Departame
   const { puede } = usePermisos();
   const gestionar = puede("departamentos.gestionar");
   const [editar, setEditar] = useState(false);
-  const [confirmar, setConfirmar] = useState<"desactivar" | "reactivar" | null>(null);
+  const [confirmar, setConfirmar] = useState<"desactivar" | "reactivar" | "eliminar" | null>(null);
+  const navigate = useNavigate();
   const tipos = useQuery({ queryKey: clavesTipos.lista, queryFn: listarTipos, enabled: puede("finanzas.ver") });
   const estructura = useQuery({ queryKey: clavesEstructura.estructura, queryFn: getEstructura });
   const torre = estructura.data?.torres.find((x) => x.id === d.torre_id);
@@ -61,6 +64,9 @@ export function DatosDepartamento({ departamento: d }: { departamento: Departame
             <>
               <Button size="sm" variant="outline" onClick={() => setEditar(true)} disabled={!d.activo}>
                 Editar
+              </Button>
+              <Button size="sm" variant="ghost" onClick={() => setConfirmar("eliminar")}>
+                Eliminar
               </Button>
               {d.activo ? (
                 <Button size="sm" variant="destructive" onClick={() => setConfirmar("desactivar")}>
@@ -117,6 +123,22 @@ export function DatosDepartamento({ departamento: d }: { departamento: Departame
         onConfirmar={async () => {
           guardado(await desactivarDepartamento(d.id));
           toast.success("Departamento desactivado.");
+        }}
+      />
+      <Confirmar
+        abierto={confirmar === "eliminar"}
+        onCerrar={() => setConfirmar(null)}
+        titulo={`Eliminar ${d.codigo}`}
+        descripcion="Solo para corregir un alta errónea: se borra con sus estacionamientos y depósitos. Si tiene ocupantes, cuenta de acceso, liquidaciones, pagos u otro historial, no se puede eliminar; en ese caso desactívelo."
+        confirmar="Eliminar definitivamente"
+        peligro
+        onConfirmar={async () => {
+          await eliminarDepartamento(d.id);
+          qc.removeQueries({ queryKey: clavesDepartamentos.uno(d.id) });
+          qc.invalidateQueries({ queryKey: ["departamentos"] });
+          qc.invalidateQueries({ queryKey: clavesEstructura.estructura });
+          toast.success(`Departamento ${d.codigo} eliminado.`);
+          navigate("/departamentos", { replace: true });
         }}
       />
       <Confirmar
