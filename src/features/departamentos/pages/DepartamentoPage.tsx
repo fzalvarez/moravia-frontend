@@ -8,8 +8,9 @@ import { usePermisos } from "@/shared/hooks/usePermisos";
 import { clavesDepartamentos, getDepartamento, type Departamento } from "../services/departamentos.service";
 import { DatosDepartamento } from "../components/DatosDepartamento";
 import { AnexosDepartamento } from "../components/AnexosDepartamento";
+import { OcupantesDepartamento } from "@/features/personas/components/OcupantesDepartamento";
 
-type Pestana = "datos" | "anexos";
+type Pestana = "datos" | "anexos" | "ocupantes";
 
 export default function DepartamentoPage() {
   const { id = "" } = useParams();
@@ -24,6 +25,7 @@ export default function DepartamentoPage() {
   const pestanas: { valor: Pestana; label: string; ver: boolean; contenido: (d: Departamento) => ReactNode }[] = [
     { valor: "datos", label: "Datos", ver: true, contenido: (d) => <DatosDepartamento departamento={d} /> },
     { valor: "anexos", label: "Anexos", ver: puede("departamentos.ver"), contenido: (d) => <AnexosDepartamento departamento={d} /> },
+    { valor: "ocupantes", label: "Ocupantes", ver: puede("personas.ver"), contenido: (d) => <OcupantesDepartamento departamento={d} /> },
   ];
   const visibles = pestanas.filter((p) => p.ver);
   const actual = visibles.find((p) => p.valor === pestana) ?? visibles[0];

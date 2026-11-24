@@ -13,6 +13,8 @@ import CuentaDetallePage from "@/features/cuentas/pages/CuentaDetallePage";
 import RolesPage from "@/features/cuentas/pages/RolesPage";
 import DepartamentosPage from "@/features/departamentos/pages/DepartamentosPage";
 import DepartamentoPage from "@/features/departamentos/pages/DepartamentoPage";
+import PersonasPage from "@/features/personas/pages/PersonasPage";
+import PersonaPage from "@/features/personas/pages/PersonaPage";
 
 export const router = createBrowserRouter([
   {
@@ -26,6 +28,8 @@ export const router = createBrowserRouter([
           { index: true, element: <InicioPage />, handle: { titulo: "Inicio" } },
           { path: "departamentos", element: <DepartamentosPage />, handle: { titulo: "Departamentos" } },
           { path: "departamentos/:id", element: <DepartamentoPage />, handle: { titulo: "Departamento" } },
+          { path: "personas", element: <PersonasPage />, handle: { titulo: "Personas" } },
+          { path: "personas/:id", element: <PersonaPage />, handle: { titulo: "Persona" } },
           { path: "cuentas", element: <CuentasPage />, handle: { titulo: "Cuentas de acceso" } },
           { path: "cuentas/:id", element: <CuentaDetallePage />, handle: { titulo: "Cuenta" } },
           { path: "roles", element: <RolesPage />, handle: { titulo: "Roles y permisos" } },
