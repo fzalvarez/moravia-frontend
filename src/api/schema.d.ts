@@ -366,6 +366,63 @@ export interface paths {
         patch: operations["actualizar_anexo_api_v1_anexos__anexo_id__patch"];
         trace?: never;
     };
+    "/api/v1/estructura": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        /**
+         * Obtener Estructura
+         * @description 404 mientras no se haya configurado.
+         */
+        get: operations["obtener_estructura_api_v1_estructura_get"];
+        put?: never;
+        /** Crear Estructura */
+        post: operations["crear_estructura_api_v1_estructura_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        /** Actualizar Estructura */
+        patch: operations["actualizar_estructura_api_v1_estructura_patch"];
+        trace?: never;
+    };
+    "/api/v1/torres": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        /** Crear Torre */
+        post: operations["crear_torre_api_v1_torres_post"];
+        delete?: never;
+        options?: never;
+        head?: never;
+        patch?: never;
+        trace?: never;
+    };
+    "/api/v1/torres/{torre_id}": {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        get?: never;
+        put?: never;
+        post?: never;
+        /** Eliminar Torre */
+        delete: operations["eliminar_torre_api_v1_torres__torre_id__delete"];
+        options?: never;
+        head?: never;
+        /** Actualizar Torre */
+        patch: operations["actualizar_torre_api_v1_torres__torre_id__patch"];
+        trace?: never;
+    };
     "/api/v1/personas": {
         parameters: {
             query?: never;
@@ -1849,6 +1906,8 @@ export interface components {
             codigo?: string | null;
             /** Piso */
             piso?: number | null;
+            /** Torre Id */
+            torre_id?: string | null;
         };
         /** DepartamentoCrear */
         DepartamentoCrear: {
@@ -1856,6 +1915,8 @@ export interface components {
             codigo: string;
             /** Piso */
             piso?: number | null;
+            /** Torre Id */
+            torre_id?: string | null;
         };
         /** DepartamentoSalida */
         DepartamentoSalida: {
@@ -1872,6 +1933,8 @@ export interface components {
             activo: boolean;
             /** Tipo Departamento Id */
             tipo_departamento_id: string | null;
+            /** Torre Id */
+            torre_id: string | null;
             /**
              * Creado En
              * Format: date-time
@@ -1950,6 +2013,42 @@ export interface components {
          * @enum {string}
          */
         EstadoPago: "pendiente" | "parcial" | "pagado" | "anulado";
+        /** EstructuraActualizar */
+        EstructuraActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            nomenclatura?: components["schemas"]["Nomenclatura"] | null;
+        };
+        /** EstructuraCrear */
+        EstructuraCrear: {
+            tipo: components["schemas"]["TipoEstructura"];
+            /** Nombre */
+            nombre?: string | null;
+            nomenclatura?: components["schemas"]["Nomenclatura"] | null;
+            /**
+             * Torres
+             * @default []
+             */
+            torres: components["schemas"]["TorreEntrada"][];
+            /** Pisos */
+            pisos?: number | null;
+        };
+        /** EstructuraSalida */
+        EstructuraSalida: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            tipo: components["schemas"]["TipoEstructura"];
+            /** Nombre */
+            nombre: string | null;
+            nomenclatura: components["schemas"]["Nomenclatura"] | null;
+            /** Torres */
+            torres: components["schemas"]["TorreSalida"][];
+            /** Sin Torre */
+            sin_torre: number;
+        };
         /** GastoActualizar */
         GastoActualizar: {
             /** Periodo Id */
@@ -2399,6 +2498,11 @@ export interface components {
             /** Motivo */
             motivo: string;
         };
+        /**
+         * Nomenclatura
+         * @enum {string}
+         */
+        Nomenclatura: "letras" | "numeros" | "nombres";
         /** Pagina[DepartamentoSalida] */
         Pagina_DepartamentoSalida_: {
             /** Items */
@@ -2893,6 +2997,11 @@ export interface components {
             nombre: string;
         };
         /**
+         * TipoEstructura
+         * @enum {string}
+         */
+        TipoEstructura: "edificio" | "condominio";
+        /**
          * TipoMovimiento
          * @enum {string}
          */
@@ -2925,6 +3034,39 @@ export interface components {
             token_type: string;
             /** Expires In */
             expires_in: number;
+        };
+        /** TorreActualizar */
+        TorreActualizar: {
+            /** Nombre */
+            nombre?: string | null;
+            /** Pisos */
+            pisos?: number | null;
+        };
+        /** TorreEntrada */
+        TorreEntrada: {
+            /** Nombre */
+            nombre: string;
+            /** Pisos */
+            pisos: number;
+        };
+        /** TorreSalida */
+        TorreSalida: {
+            /**
+             * Id
+             * Format: uuid
+             */
+            id: string;
+            /** Nombre */
+            nombre: string;
+            /** Pisos */
+            pisos: number;
+            /** Orden */
+            orden: number;
+            /**
+             * Departamentos
+             * @default 0
+             */
+            departamentos: number;
         };
         /** TotalesRecaudacionSalida */
         TotalesRecaudacionSalida: {
@@ -3655,6 +3797,8 @@ export interface operations {
                 /** @description Busca por código */
                 q?: string | null;
                 activo?: boolean | null;
+                torre_id?: string | null;
+                piso?: number | null;
                 limit?: number;
                 offset?: number;
             };
@@ -3962,6 +4106,189 @@ export interface operations {
                 };
                 content: {
                     "application/json": components["schemas"]["AnexoSalida"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    obtener_estructura_api_v1_estructura_get: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstructuraSalida"];
+                };
+            };
+        };
+    };
+    crear_estructura_api_v1_estructura_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EstructuraCrear"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstructuraSalida"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_estructura_api_v1_estructura_patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["EstructuraActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["EstructuraSalida"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    crear_torre_api_v1_torres_post: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path?: never;
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TorreEntrada"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            201: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TorreSalida"];
+                };
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    eliminar_torre_api_v1_torres__torre_id__delete: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                torre_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody?: never;
+        responses: {
+            /** @description Successful Response */
+            204: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content?: never;
+            };
+            /** @description Validation Error */
+            422: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["HTTPValidationError"];
+                };
+            };
+        };
+    };
+    actualizar_torre_api_v1_torres__torre_id__patch: {
+        parameters: {
+            query?: never;
+            header?: never;
+            path: {
+                torre_id: string;
+            };
+            cookie?: never;
+        };
+        requestBody: {
+            content: {
+                "application/json": components["schemas"]["TorreActualizar"];
+            };
+        };
+        responses: {
+            /** @description Successful Response */
+            200: {
+                headers: {
+                    [name: string]: unknown;
+                };
+                content: {
+                    "application/json": components["schemas"]["TorreSalida"];
                 };
             };
             /** @description Validation Error */

@@ -5,19 +5,21 @@ import { LoaderIcon } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const buttonVariants = cva(
-  "inline-flex items-center select-none justify-center gap-2 whitespace-nowrap rounded-lg text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-[#0052cc]/30 dark:focus-visible:ring-brand-400/30",
+  "inline-flex items-center select-none justify-center gap-2 whitespace-nowrap rounded-xl text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none shrink-0 [&_svg]:shrink-0 outline-none focus-visible:ring-2 focus-visible:ring-brand-500/30 dark:focus-visible:ring-brand-400/30",
   {
     variants: {
       variant: {
         default:
-          "bg-[#0052cc] text-white hover:bg-[#003d9b] active:scale-[0.98] shadow-sm dark:bg-brand-500 dark:hover:bg-brand-600",
+          "bg-brand-500 text-white hover:bg-brand-600 active:scale-[0.98] shadow-sm shadow-brand-500/20",
         outline:
-          "border border-[#c3c6d6] bg-white text-[#0b1c30] hover:bg-[#eff4ff] hover:border-[#0052cc] dark:border-gray-700 dark:bg-transparent dark:text-gray-100 dark:hover:bg-white/5 dark:hover:border-brand-400",
+          "border border-gray-200 bg-white text-gray-800 hover:bg-brand-25 hover:border-brand-300 hover:text-brand-700",
+        secondary: "bg-brand-50 text-brand-700 hover:bg-brand-100",
+        inverted: "bg-gray-800 text-white hover:bg-gray-900",
         ghost:
-          "text-[#434654] hover:bg-[#eff4ff] hover:text-[#0052cc] dark:text-gray-300 dark:hover:bg-white/5 dark:hover:text-brand-400",
+          "text-gray-600 hover:bg-brand-50 hover:text-brand-700",
         destructive:
           "bg-red-600 text-white hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-500",
-        link: "text-[#0052cc] underline-offset-4 hover:underline dark:text-brand-400",
+        link: "text-brand-600 underline-offset-4 hover:underline",
       },
       size: {
         default: "h-10 px-4 py-2.5",

@@ -5,7 +5,7 @@ import { logout } from "../services/logout.service";
 /** Las cuentas de departamento no usan la administración (F-014). */
 export default function SoloPortalPage() {
   return (
-    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-[#f8f9fe]">
+    <div className="min-h-screen flex flex-col items-center justify-center p-4 bg-surface">
       <Marca />
       <div className="w-full max-w-110 bg-white rounded-2xl border border-gray-200/80 p-8 shadow-theme-lg text-center">
         <h1 className="text-xl font-extrabold text-gray-900 mb-2">Esta es la administración</h1>

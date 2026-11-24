@@ -15,7 +15,7 @@ export function Campo({ id, label, error, ayuda, children, className }: { id?: s
 }
 
 const CONTROL =
-  "w-full h-10 rounded-lg border border-gray-300 bg-white px-3 text-sm text-gray-900 outline-none focus:border-brand-500 focus:ring-3 focus:ring-brand-500/15 disabled:bg-gray-50 disabled:text-gray-500 aria-invalid:border-error-500";
+  "w-full h-10 rounded-xl border border-gray-200 bg-white px-3 text-sm text-gray-900 outline-none focus:border-brand-400 focus:ring-3 focus:ring-brand-500/15 disabled:bg-gray-50 disabled:text-gray-500 aria-invalid:border-error-500";
 
 export function Select({ className, ...props }: ComponentProps<"select">) {
   return <select className={cn(CONTROL, "pr-8", className)} {...props} />;

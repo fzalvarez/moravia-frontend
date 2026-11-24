@@ -9,7 +9,7 @@ export default function AdminLayout() {
   const close = () => setIsMobileOpen(false);
 
   return (
-    <div className="min-h-screen bg-[#f8f9fe]">
+    <div className="min-h-screen bg-surface">
       <AppSidebar isMobileOpen={isMobileOpen} onNavigate={close} />
       <Backdrop visible={isMobileOpen} onClose={close} />
       <div className="lg:ml-64 flex flex-col min-h-screen">

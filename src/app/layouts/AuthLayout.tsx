@@ -14,7 +14,7 @@ export default function AuthLayout() {
   }
 
   return (
-    <div className="min-h-screen bg-[#f8f9fe]">
+    <div className="min-h-screen bg-surface">
       <Outlet />
     </div>
   );
