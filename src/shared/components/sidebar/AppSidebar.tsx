@@ -34,14 +34,14 @@ export function AppSidebar({ isMobileOpen, onNavigate }: AppSidebarProps) {
     cn(
       "flex items-center gap-3 px-3 py-2.5 rounded-xl text-[13px] font-medium transition-colors",
       isActive
-        ? "bg-brand-500 text-white font-semibold shadow-sm shadow-brand-500/30"
-        : "text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+        ? "bg-brand-500 text-white font-semibold shadow-md shadow-brand-500/25"
+        : "text-gray-600 hover:text-gray-900 hover:bg-surface-container"
     );
 
   return (
     <nav
       className={cn(
-        "fixed left-0 top-0 h-full w-64 z-50 flex flex-col bg-white border-r border-gray-200 transition-transform duration-200 ease-in-out",
+        "fixed left-0 top-0 h-full w-64 z-50 flex flex-col bg-white shadow-[0_1px_8px_rgba(0,0,0,0.03)] transition-transform duration-200 ease-in-out",
         "lg:translate-x-0",
         isMobileOpen ? "translate-x-0" : "-translate-x-full"
       )}

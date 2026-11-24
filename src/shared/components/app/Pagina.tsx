@@ -22,7 +22,7 @@ export function Encabezado({ titulo, descripcion, acciones, volver }: Encabezado
       )}
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
-          <h1 className="text-2xl font-extrabold tracking-tight text-gray-900">{titulo}</h1>
+          <h1 className="text-3xl font-bold tracking-tight text-gray-900">{titulo}</h1>
           {descripcion && <p className="text-sm text-gray-500 mt-1">{descripcion}</p>}
         </div>
         {acciones && <div className="flex flex-wrap items-center gap-2">{acciones}</div>}
@@ -34,9 +34,9 @@ export function Encabezado({ titulo, descripcion, acciones, volver }: Encabezado
 /** Contenedor blanco de las secciones. */
 export function Tarjeta({ titulo, acciones, children, className }: { titulo?: ReactNode; acciones?: ReactNode; children: ReactNode; className?: string }) {
   return (
-    <section className={cn("bg-white border border-gray-200/80 rounded-2xl shadow-theme-sm", className)}>
+    <section className={cn("bg-white rounded-2xl shadow-theme-xs", className)}>
       {(titulo || acciones) && (
-        <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-4 border-b border-gray-100">
+        <div className="flex flex-wrap items-center justify-between gap-2 px-5 py-4 border-b border-gray-50">
           {titulo && <h2 className="font-bold text-gray-900">{titulo}</h2>}
           {acciones && <div className="flex flex-wrap items-center gap-2">{acciones}</div>}
         </div>
