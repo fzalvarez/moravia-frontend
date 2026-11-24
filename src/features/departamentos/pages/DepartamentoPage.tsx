@@ -1,5 +1,5 @@
 import { useState, type ReactNode } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { Encabezado, Etiqueta, Pestanas } from "@/shared/components/app/Pagina";
 import { ErrorConsulta } from "@/shared/components/app/Tabla";
@@ -16,7 +16,8 @@ type Pestana = "datos" | "anexos" | "ocupantes" | "cuenta";
 export default function DepartamentoPage() {
   const { id = "" } = useParams();
   const { puede } = usePermisos();
-  const [pestana, setPestana] = useState<Pestana>("datos");
+  const [params] = useSearchParams();
+  const [pestana, setPestana] = useState<Pestana>((params.get("pestana") as Pestana) ?? "datos");
   const depto = useQuery({ queryKey: clavesDepartamentos.uno(id), queryFn: () => getDepartamento(id) });
 
   if (depto.isPending) return <TableStateBlock variant="loading" />;

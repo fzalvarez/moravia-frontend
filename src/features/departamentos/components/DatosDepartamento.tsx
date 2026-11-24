@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { useForm } from "react-hook-form";
+import { useForm, useWatch } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { toast } from "sonner";
@@ -15,6 +15,7 @@ import { formatFechaHora } from "@/shared/lib/formato";
 import { getApiErrorMessage } from "@/shared/lib/http-error";
 import { requerido } from "@/shared/lib/validacion";
 import { clavesTipos, listarTipos } from "@/features/configuracion/services/tipos.service";
+import { clavesEstructura, getEstructura, type Estructura } from "@/features/estructura/services/estructura.service";
 import {
   actualizarDepartamento,
   asignarTipoDepartamento,
@@ -31,10 +32,13 @@ export function DatosDepartamento({ departamento: d }: { departamento: Departame
   const [editar, setEditar] = useState(false);
   const [confirmar, setConfirmar] = useState<"desactivar" | "reactivar" | null>(null);
   const tipos = useQuery({ queryKey: clavesTipos.lista, queryFn: listarTipos, enabled: puede("finanzas.ver") });
+  const estructura = useQuery({ queryKey: clavesEstructura.estructura, queryFn: getEstructura });
+  const torre = estructura.data?.torres.find((x) => x.id === d.torre_id);
 
   const guardado = (nuevo: Departamento) => {
     qc.setQueryData(clavesDepartamentos.uno(d.id), nuevo);
-    qc.invalidateQueries({ queryKey: ["departamentos", "lista"] });
+    qc.invalidateQueries({ queryKey: ["departamentos"] });
+    qc.invalidateQueries({ queryKey: clavesEstructura.estructura });
   };
 
   const tipo = useMutation({
@@ -74,6 +78,7 @@ export function DatosDepartamento({ departamento: d }: { departamento: Departame
         <Datos
           items={[
             { label: "Código", valor: d.codigo },
+            ...(estructura.data?.tipo === "condominio" ? [{ label: "Torre", valor: torre ? torre.nombre : "Sin torre" }] : []),
             { label: "Piso", valor: d.piso ?? "—" },
             { label: "Estado", valor: d.activo ? <Etiqueta tono="verde">Activo</Etiqueta> : <Etiqueta tono="rojo">Desactivado</Etiqueta> },
             ...(puede("finanzas.ver") ? [{ label: "Tipo (para cuotas por tipo)", valor: nombreTipo }] : []),
@@ -101,7 +106,7 @@ export function DatosDepartamento({ departamento: d }: { departamento: Departame
         )}
       </Tarjeta>
 
-      <EditarDepartamento departamento={d} abierto={editar} onCerrar={() => setEditar(false)} onGuardado={guardado} />
+      <EditarDepartamento departamento={d} estructura={estructura.data ?? null} abierto={editar} onCerrar={() => setEditar(false)} onGuardado={guardado} />
       <Confirmar
         abierto={confirmar === "desactivar"}
         onCerrar={() => setConfirmar(null)}
@@ -132,14 +137,18 @@ export function DatosDepartamento({ departamento: d }: { departamento: Departame
 const esquema = z.object({
   codigo: requerido(20),
   piso: z.string().trim().regex(/^-?\d*$/, "Número entero"),
+  torre_id: z.string(),
 });
 type Valores = z.infer<typeof esquema>;
 
-function EditarDepartamento({ departamento: d, abierto, onCerrar, onGuardado }: { departamento: Departamento; abierto: boolean; onCerrar: () => void; onGuardado: (d: Departamento) => void }) {
+function EditarDepartamento({ departamento: d, estructura, abierto, onCerrar, onGuardado }: { departamento: Departamento; estructura: Estructura | null; abierto: boolean; onCerrar: () => void; onGuardado: (d: Departamento) => void }) {
   const [error, setError] = useState<string | null>(null);
-  const form = useForm<Valores>({ resolver: zodResolver(esquema), values: { codigo: d.codigo, piso: d.piso?.toString() ?? "" } });
+  const form = useForm<Valores>({ resolver: zodResolver(esquema), values: { codigo: d.codigo, piso: d.piso?.toString() ?? "", torre_id: d.torre_id ?? (estructura?.tipo === "edificio" ? (estructura.torres[0]?.id ?? "") : "") } });
+  const torreId = useWatch({ control: form.control, name: "torre_id" });
+  const torreElegida = estructura?.torres.find((x) => x.id === torreId);
   const guardar = useMutation({
-    mutationFn: (v: Valores) => actualizarDepartamento(d.id, { codigo: v.codigo, piso: v.piso === "" ? null : Number(v.piso) }),
+    mutationFn: (v: Valores) =>
+      actualizarDepartamento(d.id, { codigo: v.codigo, piso: v.piso === "" ? null : Number(v.piso), ...(estructura ? { torre_id: v.torre_id || null } : {}) }),
     onSuccess: (n) => {
       onGuardado(n);
       toast.success("Departamento actualizado.");
@@ -175,7 +184,19 @@ function EditarDepartamento({ departamento: d, abierto, onCerrar, onGuardado }: 
       <Campo id="codigo" label="Código" error={errors.codigo?.message} ayuda="El cambio queda auditado.">
         <Input id="codigo" aria-invalid={!!errors.codigo} {...form.register("codigo")} />
       </Campo>
-      <Campo id="piso" label="Piso" error={errors.piso?.message} ayuda="Vacío para quitarlo.">
+      {estructura?.tipo === "condominio" && (
+        <Campo id="torre_id" label="Torre" error={errors.torre_id?.message}>
+          <Select id="torre_id" {...form.register("torre_id")}>
+            <option value="">Sin torre</option>
+            {estructura.torres.map((x) => (
+              <option key={x.id} value={x.id}>
+                {x.nombre}
+              </option>
+            ))}
+          </Select>
+        </Campo>
+      )}
+      <Campo id="piso" label="Piso" error={errors.piso?.message} ayuda={torreElegida ? `Entre 1 y ${torreElegida.pisos}.` : "Vacío para quitarlo."}>
         <Input id="piso" inputMode="numeric" aria-invalid={!!errors.piso} {...form.register("piso")} />
       </Campo>
       <ErrorFormulario mensaje={error} />

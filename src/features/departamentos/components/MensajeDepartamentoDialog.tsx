@@ -8,7 +8,6 @@ import { Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle } fr
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
-import { iniciales } from "@/shared/lib/formato";
 import { notifyError, notifySuccess } from "@/shared/utils";
 import type { DepartamentoFicha, PersonaApi } from "../types";
 import {
@@ -157,45 +156,36 @@ function MensajeForm({ ficha }: { ficha: DepartamentoFicha }) {
 
       <form className="p-6 overflow-y-auto space-y-5 text-xs text-gray-700 flex-1" onSubmit={(e) => e.preventDefault()} noValidate>
         {/* Aviso: el backend aún no envía mensajes */}
-        <div className="p-3 rounded-xl bg-warning-50 border border-warning-200 flex gap-2.5 text-warning-800">
-          <InfoIcon className="size-4 shrink-0 mt-0.5" />
-          <p className="text-[11px] leading-relaxed">
-            Moravia todavía no envía ni registra mensajes. Redáctelo aquí y ábralo ya personalizado en su correo o en
-            WhatsApp. El envío desde el sistema está pedido al backend (<strong>PB-001</strong>).
-          </p>
-        </div>
+        <p className="flex items-center gap-1.5 text-[11px] text-gray-500">
+          <InfoIcon className="size-3.5 shrink-0" />
+          Se abre ya personalizado en su correo o WhatsApp; Moravia aún no lo envía ni lo registra (PB-001).
+        </p>
 
         {/* Destinatarios: vínculos vigentes */}
         <section className="space-y-2">
           <Label>Destinatarios</Label>
-          <div className="space-y-1.5">
+          <div className="flex flex-wrap gap-1.5">
             {ficha.ocupantes.map(({ vinculo: v, persona: p }) => {
               const marcado = personaIds.includes(p.id);
               return (
                 <label
                   key={p.id}
+                  title={[p.correo, p.telefono].filter(Boolean).join(" · ") || "Sin correo ni teléfono"}
                   className={cn(
-                    "flex items-center gap-3 p-2.5 rounded-xl border cursor-pointer transition-colors",
-                    marcado ? "bg-brand-50/50 border-brand-200" : "bg-white border-gray-200 hover:bg-gray-50"
+                    "flex items-center gap-2 pl-2 pr-3 py-1.5 rounded-xl cursor-pointer text-[12px] transition-colors",
+                    marcado ? "bg-brand-50 text-brand-800 ring-1 ring-brand-200" : "bg-surface-container text-gray-700 hover:bg-surface-high"
                   )}
                 >
                   <Checkbox checked={marcado} onCheckedChange={(c) => togglePersona(p.id, c === true)} />
-                  <div className="w-8 h-8 rounded-full bg-brand-100 text-brand-700 font-bold text-[11px] flex items-center justify-center shrink-0">
-                    {iniciales(p.nombres, p.apellidos)}
-                  </div>
-                  <div className="min-w-0 flex-1">
-                    <div className="font-semibold text-gray-900 truncate">
-                      {p.nombres} {p.apellidos}
-                    </div>
-                    <div className="text-[11px] text-gray-500">
-                      {ETIQUETA_VINCULO[v.tipo]}
-                      {v.es_principal && <span className="text-brand-600 font-semibold"> · Residente principal</span>}
-                    </div>
-                  </div>
-                  <div className="hidden sm:flex flex-col items-end text-[11px] text-gray-500">
-                    <span className={cn(!p.correo && "italic text-gray-300")}>{p.correo ?? "Sin correo"}</span>
-                    <span className={cn(!p.telefono && "italic text-gray-300")}>{p.telefono ?? "Sin teléfono"}</span>
-                  </div>
+                  <span className="font-semibold">
+                    {p.nombres} {p.apellidos}
+                  </span>
+                  <span className="text-gray-400">
+                    {ETIQUETA_VINCULO[v.tipo]}
+                    {v.es_principal && " · principal"}
+                  </span>
+                  <MailIcon className={cn("size-3.5", p.correo ? "text-brand-500" : "text-gray-300")} />
+                  <MessageCircleIcon className={cn("size-3.5", p.telefono ? "text-success-600" : "text-gray-300")} />
                 </label>
               );
             })}
