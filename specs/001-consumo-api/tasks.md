@@ -19,5 +19,5 @@ verificación contra el backend local, commit y push.
 - [x] F10 Cuenta del departamento: estado de cuenta, movimientos, pagos, ajustes y multas (SCREENS §7)
 - [x] F11 Multas: política y generación (SCREENS §9)
 - [x] F12 Reportes (SCREENS §10)
-- [ ] F13 Avisos de la administración (D-060): crear, retirar y ver lecturas (T010 de la spec 002)
+- [x] F13 Avisos de la administración (D-060): crear, retirar y ver lecturas (T010 de la spec 002)
 - [ ] F14 Despliegue: variables de producción y dominio en el mismo sitio que la API (P-003)
