@@ -9,8 +9,9 @@ import { clavesDepartamentos, getDepartamento, type Departamento } from "../serv
 import { DatosDepartamento } from "../components/DatosDepartamento";
 import { AnexosDepartamento } from "../components/AnexosDepartamento";
 import { OcupantesDepartamento } from "@/features/personas/components/OcupantesDepartamento";
+import { CuentaDepartamento } from "@/features/cuenta/components/CuentaDepartamento";
 
-type Pestana = "datos" | "anexos" | "ocupantes";
+type Pestana = "datos" | "anexos" | "ocupantes" | "cuenta";
 
 export default function DepartamentoPage() {
   const { id = "" } = useParams();
@@ -26,6 +27,7 @@ export default function DepartamentoPage() {
     { valor: "datos", label: "Datos", ver: true, contenido: (d) => <DatosDepartamento departamento={d} /> },
     { valor: "anexos", label: "Anexos", ver: puede("departamentos.ver"), contenido: (d) => <AnexosDepartamento departamento={d} /> },
     { valor: "ocupantes", label: "Ocupantes", ver: puede("personas.ver"), contenido: (d) => <OcupantesDepartamento departamento={d} /> },
+    { valor: "cuenta", label: "Cuenta", ver: puede("finanzas.ver"), contenido: (d) => <CuentaDepartamento departamento={d} /> },
   ];
   const visibles = pestanas.filter((p) => p.ver);
   const actual = visibles.find((p) => p.valor === pestana) ?? visibles[0];
