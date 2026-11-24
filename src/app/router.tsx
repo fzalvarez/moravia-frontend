@@ -11,6 +11,8 @@ import EnConstruccion from "@/shared/components/EnConstruccion";
 import CuentasPage from "@/features/cuentas/pages/CuentasPage";
 import CuentaDetallePage from "@/features/cuentas/pages/CuentaDetallePage";
 import RolesPage from "@/features/cuentas/pages/RolesPage";
+import DepartamentosPage from "@/features/departamentos/pages/DepartamentosPage";
+import DepartamentoPage from "@/features/departamentos/pages/DepartamentoPage";
 
 export const router = createBrowserRouter([
   {
@@ -22,6 +24,8 @@ export const router = createBrowserRouter([
         element: <AdminLayout />,
         children: [
           { index: true, element: <InicioPage />, handle: { titulo: "Inicio" } },
+          { path: "departamentos", element: <DepartamentosPage />, handle: { titulo: "Departamentos" } },
+          { path: "departamentos/:id", element: <DepartamentoPage />, handle: { titulo: "Departamento" } },
           { path: "cuentas", element: <CuentasPage />, handle: { titulo: "Cuentas de acceso" } },
           { path: "cuentas/:id", element: <CuentaDetallePage />, handle: { titulo: "Cuenta" } },
           { path: "roles", element: <RolesPage />, handle: { titulo: "Roles y permisos" } },
