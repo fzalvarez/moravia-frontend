@@ -17,7 +17,7 @@ verificación contra el backend local, commit y push.
 - [x] F8 Gastos, proveedores, categorías y comprobantes (SCREENS §6)
 - [x] F9 Liquidaciones del periodo y cierre (SCREENS §8)
 - [x] F10 Cuenta del departamento: estado de cuenta, movimientos, pagos, ajustes y multas (SCREENS §7)
-- [ ] F11 Multas: política y generación (SCREENS §9)
+- [x] F11 Multas: política y generación (SCREENS §9)
 - [ ] F12 Reportes (SCREENS §10)
 - [ ] F13 Avisos de la administración (D-060): crear, retirar y ver lecturas (T010 de la spec 002)
 - [ ] F14 Despliegue: variables de producción y dominio en el mismo sitio que la API (P-003)
