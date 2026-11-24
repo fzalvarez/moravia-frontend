@@ -1,11 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { usePermisos } from "@/shared/hooks/usePermisos";
-import { getResumenLiquidaciones, listarPeriodos, type Periodo } from "../services/periodos.service";
+import { clavesPeriodos, getResumenLiquidaciones, listarPeriodos, type Periodo } from "../services/periodos.service";
 
-export const clavesPeriodos = {
-  lista: ["periodos"] as const,
-  resumen: (id: string) => ["periodos", id, "liquidaciones", "resumen"] as const,
-};
 
 /** El periodo abierto más reciente; si no hay abiertos, el último. Solo para mostrarlo. */
 function elegirVigente(periodos: Periodo[]): Periodo | null {

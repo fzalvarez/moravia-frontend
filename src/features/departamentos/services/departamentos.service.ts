@@ -52,3 +52,13 @@ export const borrarAnexo = async (anexoId: string): Promise<void> => {
 };
 
 export const NOMBRE_ANEXO: Record<TipoAnexo, string> = { estacionamiento: "Estacionamiento", deposito: "Depósito" };
+
+/** Todos los departamentos (recorre las páginas de 200), para configuraciones por departamento. */
+export const listarTodosDepartamentos = async (activo?: boolean): Promise<Departamento[]> => {
+  const todos: Departamento[] = [];
+  for (let offset = 0; ; offset += 200) {
+    const p = await listarDepartamentos({ activo, limit: 200, offset });
+    todos.push(...p.items);
+    if (todos.length >= p.total || p.items.length === 0) return todos;
+  }
+};
