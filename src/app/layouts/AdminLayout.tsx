@@ -15,9 +15,7 @@ export default function AdminLayout() {
       <div className="lg:ml-64 flex flex-col min-h-screen">
         <AppHeader onToggleSidebar={() => setIsMobileOpen((v) => !v)} />
         <main className="flex-1 p-4 sm:p-6 lg:p-8">
-          <div className="max-w-360 mx-auto">
-            <Outlet />
-          </div>
+          <Outlet />
         </main>
       </div>
     </div>
