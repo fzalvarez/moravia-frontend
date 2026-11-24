@@ -30,3 +30,14 @@ export function getApiErrorMessage(error: unknown, fallback: string): string {
 export function getApiErrorCode(error: unknown): string | null {
   return cuerpoError(error)?.code ?? null;
 }
+
+/** Errores por campo del backend (`details[].campo` → mensaje). */
+export function getApiErrorDetails(error: unknown): Record<string, string> {
+  const detalles = cuerpoError(error)?.details ?? [];
+  return Object.fromEntries(detalles.map((d) => [d.campo, d.mensaje]));
+}
+
+/** Código HTTP de la respuesta, o null si no hubo respuesta (red). */
+export function getHttpStatus(error: unknown): number | null {
+  return error instanceof AxiosError ? (error.response?.status ?? null) : null;
+}

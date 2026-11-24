@@ -1,9 +1,10 @@
 import axios, { type InternalAxiosRequestConfig } from "axios";
 import { useAuthStore } from "@/features/auth/store/auth.store";
 import { refrescarToken } from "@/features/auth/services/refrescarToken.service";
+import { API_URL } from "./api-url";
 
-// Rutas relativas: en desarrollo el proxy de Vite las lleva al backend (F-103).
-const api = axios.create({ baseURL: "/api/v1" });
+// En desarrollo API_URL es vacío y el proxy de Vite lleva /api al backend (F-103).
+const api = axios.create({ baseURL: `${API_URL}/api/v1` });
 
 api.interceptors.request.use((config) => {
   const token = useAuthStore.getState().token;
